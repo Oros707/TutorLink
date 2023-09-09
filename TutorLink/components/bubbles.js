@@ -15,24 +15,24 @@ const styles = StyleSheet.create({
     flex: 0,
     justifyContent: "left",
     alignItems: "left",
-    backgroundColor: "black", // Set the background color of your screen
+    backgroundColor: "black",
   },
   circle1: {
     width: 200,
     height: 200,
     borderRadius: 100,
-    backgroundColor: "rgba(255, 165, 0, 0.7)", // Color of the first circle
+    backgroundColor: "rgba(255, 165, 0, 0.7)",
     position: "absolute",
-    top: -150, // Adjust the position as needed
-    left: -150, // Adjust the position as needed
+    top: -150,
+    left: -150,
   },
   circle2: {
     width: 200,
     height: 200,
     borderRadius: 100,
-    backgroundColor: "rgba(255, 165, 0, 0.7)", // Color of the second circle
+    backgroundColor: "rgba(255, 165, 0, 0.7)",
     position: "absolute",
-    top: -250, // Adjust the position as needed
-    left: -50, // Adjust the position as needed
+    top: -250,
+    left: -50,
   },
 });
