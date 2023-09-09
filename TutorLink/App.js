@@ -1,9 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import Bubbles from './components/bubbles';
 
 export default function App() {
   return (
     <View style={styles.container}>
+      <Bubbles />
       <Image
         style={styles.logo}
         source={require("./images/UJ_LOGO_BW.png")}
