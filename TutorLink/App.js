@@ -1,78 +1,70 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import Bubbles from './components/bubbles';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Claims from './components/Claims';
+import Attendance from './components/Attendance';
+import Schedule from './components/Schedule';
+import Chat from './components/Chat';
+import { Ionicons } from '@expo/vector-icons'; // Import the icons
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Bubbles />
-      <Image
-        style={styles.logo}
-        source={require("./images/UJ_LOGO_BW.png")}
-        alt="UJ Logo"
-      />
-
-      <Text style={styles.tutor}>
-        Tutor<Text style={styles.link}>Link!</Text>
-      </Text>
-
-      <Text style={styles.topic}>Payments made easy!</Text>
-      <Text style={styles.text}>
-        Payment claims, timesheets, and tutor session schedules all in one place
-      </Text>
-
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.topic}>Get Started</Text>
-      </TouchableOpacity>
-
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName="Claims"
+        tabBarOptions={{
+          activeTintColor: 'orange',
+          inactiveTintColor: 'white',
+          labelStyle: { fontSize: 16, fontWeight: 'bold' },
+          style: { backgroundColor: 'black' },
+        }}
+      >
+        <Tab.Screen
+          name="Claims"
+          component={Claims}
+          options={{
+            tabBarLabel: 'Claims',
+            headerShown: false, // Hide the header
+         
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="file-tray-full-outline" size={size} color={color} />
+            ),
+            
+          }}
+        />
+        <Tab.Screen
+          name="Attendance"
+          component={Attendance}
+          options={{
+            tabBarLabel: 'Attendance',
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="calendar-outline" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Schedule"
+          component={Schedule}
+          options={{
+            tabBarLabel: 'Schedule',
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="time-outline" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Chat"
+          component={Chat}
+          options={{
+            tabBarLabel: 'Chat',
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="chatbubbles-outline" size={size} color={color} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "left",
-    justifyContent: "center",
-    backgroundColor: "black",
-    paddingHorizontal: 30,
-  },
-  logo: {
-    width: 200,
-    height: 200,
-    alignSelf: "center",
-  },
-  tutor: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 50,
-  },
-  link: {
-    color: "orange",
-    fontWeight: "bold",
-  },
-  topic: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 40,
-  },
-  text: {
-    color: "white",
-    fontWeight: "regular",
-    fontSize: 30,
-    textAlign: "left",
-    marginBottom: 60,
-  },
-  button: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 30,
-    backgroundColor: "orange",
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 50,
-    alignItems: "center",
-    marginTop: 60,
-  },
-});
