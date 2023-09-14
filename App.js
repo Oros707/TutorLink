@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Claims from "./screens/Claims";
+import Claims from "./screens/ClaimProcess/Claims";
 import Attendance from "./screens/Attendance";
 import Schedule from "./screens/Schedule";
 import Chat from "./screens/Chat";
@@ -14,11 +14,11 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName="Claims"
-        tabBarOptions={{
-          activeTintColor: "orange",
-          inactiveTintColor: "white",
-          labelStyle: { fontSize: 16, fontWeight: "bold" },
-          style: { backgroundColor: "black" },
+        screenOptions={{
+          tabBarActiveTintColor: "orange",
+          tabBarInactiveTintColor: "white",
+          tabBarLabelStyle: { fontSize: 16, fontWeight: "bold" },
+          tabBarStyle: { backgroundColor: "black" },
         }}
       >
         <Tab.Screen
@@ -27,7 +27,6 @@ export default function App() {
           options={{
             tabBarLabel: "Claims",
             headerShown: false, // Hide the header
-
             tabBarIcon: ({ color, size }) => (
               <Ionicons
                 name="file-tray-full-outline"

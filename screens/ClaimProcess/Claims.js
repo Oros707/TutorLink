@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import Bubbles from '../components/bubbles';
+import Bubbles from '../../components/bubbles';
 
 export default function Claims() {
   return (
@@ -8,7 +8,7 @@ export default function Claims() {
       <Bubbles />
       <Image
         style={styles.logo}
-        source={require('../images/UJ_LOGO_BW.png')}
+        source={require('../../images/UJ_LOGO_BW.png')}
         alt="UJ Logo"
       />
 
@@ -31,7 +31,7 @@ export default function Claims() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'left',
+    alignItems: 'center', // Changed from 'left' to 'center'
     justifyContent: 'center',
     backgroundColor: 'black',
     paddingHorizontal: 30,
