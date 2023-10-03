@@ -1,6 +1,5 @@
-// Confirmation.js
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Confirmation() {
@@ -30,19 +29,56 @@ export default function Confirmation() {
   };
 
   return (
-    <View>
-      <Text>Enter OTP:</Text>
+    <View style={styles.container}>
+      <Text style={styles.label}>Enter OTP:</Text>
       <TextInput
+        style={styles.input}
         value={otp}
         onChangeText={(text) => setOTP(text)}
         placeholder="OTP"
       />
 
-      <Text>Time Remaining: {remainingTime} seconds</Text>
+      <Text style={styles.timer}>Time Remaining: {remainingTime} seconds</Text>
 
-      <TouchableOpacity onPress={handleConfirm}>
-        <Text>Confirm</Text>
+      <TouchableOpacity style={styles.button} onPress={handleConfirm}>
+        <Text style={styles.buttonText}>Confirm</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#333', // Dark grey background color
+  },
+  label: {
+    color: 'orange', // Orange text color
+    fontSize: 16,
+    marginTop: 8,
+  },
+  input: {
+    backgroundColor: 'white',
+    borderRadius: 4,
+    padding: 8,
+    fontSize: 16,
+    marginTop: 4,
+  },
+  timer: {
+    color: 'orange', // Orange text color
+    fontSize: 16,
+    marginTop: 8,
+  },
+  button: {
+    backgroundColor: 'orange', // Orange button background color
+    borderRadius: 4,
+    padding: 12,
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+  },
+});
