@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Attendance from "./screens/Attendance/Attendance";
 import Schedule from "./screens/Schedule";
-import Chat from "./screens/Chat";
+import Chat from "./screens/Chat/Chat";
 import { Ionicons } from "@expo/vector-icons";
 import ClaimNavigator from "./screens/ClaimProcess/ClaimNavigator";
 

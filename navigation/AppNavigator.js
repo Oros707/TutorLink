@@ -8,7 +8,7 @@ import SplashScreen from "../screens/SplashScreen";
 import Claims from "../screens/ClaimProcess/Claims";
 import Attendance from "../screens/Attendance/Attendance";
 import Schedule from "../screens/Schedule";
-import Chat from "../screens/Chat";
+import Chat from "../screens/Chat/Chat";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
