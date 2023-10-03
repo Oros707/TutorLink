@@ -1,20 +1,72 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Attendance from "./screens/Attendance";
+import Schedule from "./screens/Schedule";
+import Chat from "./screens/Chat";
+import { Ionicons } from "@expo/vector-icons";
+import ClaimNavigator from "./screens/ClaimProcess/ClaimNavigator";
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName="Claims"
+        screenOptions={{
+          tabBarActiveTintColor: "orange",
+          tabBarInactiveTintColor: "white",
+          tabBarLabelStyle: { fontSize: 16, fontWeight: "bold" },
+          tabBarStyle: { backgroundColor: "black" },
+        }}
+      >
+        <Tab.Screen
+          name="ClaimNavigator"
+          component={ClaimNavigator}
+          options={{
+            tabBarLabel: "Claims",
+            headerShown: false, 
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons
+                name="file-tray-full-outline"
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Attendance"
+          component={Attendance}
+          options={{
+            tabBarLabel: "Attendance",
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="calendar-outline" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Schedule"
+          component={Schedule}
+          options={{
+            tabBarLabel: "Schedule",
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="time-outline" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Chat"
+          component={Chat}
+          options={{
+            tabBarLabel: "Chat",
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="chatbubbles-outline" size={size} color={color} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
