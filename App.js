@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Attendance from "./screens/Attendance";
+import Attendance from "./screens/Attendance/Attendance";
 import Schedule from "./screens/Schedule";
 import Chat from "./screens/Chat";
 import { Ionicons } from "@expo/vector-icons";

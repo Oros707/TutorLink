@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import SplashScreen from "../screens/SplashScreen";
 import Claims from "../screens/ClaimProcess/Claims";
-import Attendance from "../screens/Attendance";
+import Attendance from "../screens/Attendance/Attendance";
 import Schedule from "../screens/Schedule";
 import Chat from "../screens/Chat";
 

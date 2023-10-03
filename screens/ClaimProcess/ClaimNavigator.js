@@ -6,6 +6,7 @@ import BankingDetails from "./BankingDetails";
 import ClaimDetails from "./ClaimDetails";
 import Confirmation from "./Confirmation";
 import TemporaryAppointment from "./TemporaryAppointment";
+import ConfirmationResult from "./ConfirmationResult";
 
 const Stack = createStackNavigator();
 
@@ -44,6 +45,13 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Confirmation"
           component={Confirmation}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ConfirmationResult"
+          component={ConfirmationResult}
           options={{
             headerShown: false,
           }}

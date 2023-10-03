@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome'; // Import your icon library
 
 function Attendance() {
   const navigation = useNavigation();
@@ -18,12 +19,28 @@ function Attendance() {
   };
 
   return (
-    <View>
-      <Text>Attendance Screen</Text>
+    <View style={styles.container}>
+      
       <Button title="Scan QR Code" onPress={handleScanQRCode} />
       <Button title="Enter Link" onPress={handleEnterLink} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'darkgray', // Set the background color to dark grey
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+    color: 'orange', // Set the text color to orange
+    // You can add more text styles such as fontFamily, fontWeight, etc.
+  },
+  // Add more styles for buttons and other elements as needed
+});
 
 export default Attendance;

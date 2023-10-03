@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: "#333",
+    
   },
   label: {
     color: "orange",
