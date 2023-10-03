@@ -1,38 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 const Schedule = () => {
-  // Define the timetable data for the specified modules
+  const [selectedYear, setSelectedYear] = useState('FirstYear');
+  const [selectedModuleCode, setSelectedModuleCode] = useState('');
+
+  
   const timetable = [
-    {
-      time: '07:30 - 09:00',
-      Monday: '',
-      Tuesday: 'DSW01',
-      Wednesday: '',
-      Thursday: '',
-      Friday: 'IFS02',
-    },
-    {
-      time: '09:00 - 10:30',
-      Monday: '',
-      Tuesday: 'DSW01',
-      Wednesday: 'CMN04',
-      Thursday: '',
-      Friday: 'IFS02',
-    },
-    {
-      time: '10:30 - 12:00',
-      Monday: '',
-      Tuesday: 'DSW01',
-      Wednesday: 'CMN04',
-      Thursday: '',
-      Friday: 'IFS02',
-    },
-    // Add more time slots as needed
+    // Your timetable data here
   ];
+
+  // Define module codes for each year
+  const moduleCodesByYear = {
+    FirstYear: ['BAY01B1', 'DSW01B1', 'SSW01B1', 'IFS01B1'],
+    SecondYear: ['BAY02B1', 'DSW02B1', 'SSW02B1', 'IFS02B1'],
+    ThirdYear: ['BAY03B1', 'DSW03B1', 'SSW03B1', 'IFS03B1'],
+  };
+
+  // Update the module code options when the year selection changes
+  const handleYearChange = (year) => {
+    setSelectedYear(year);
+    setSelectedModuleCode('');
+  };
 
   return (
     <View style={styles.container}>
+      <View>
+        <Text style={styles.title}> Tutoring Schedule</Text>
+      </View>
+      <View style={styles.dropdowns}>
+        <View style={styles.dropdownContainer}>
+          <Text style={styles.label}>Year of Study</Text>
+          <Picker
+            selectedValue={selectedYear}
+            onValueChange={(itemValue) => handleYearChange(itemValue)}
+            style={styles.dropdown}
+          >
+            <Picker.Item label="Select Year of Study" value="" />
+            <Picker.Item label="First Year" value="FirstYear" />
+            <Picker.Item label="Second Year" value="SecondYear" />
+            <Picker.Item label="Third Year" value="ThirdYear" />
+          </Picker>
+        </View>
+
+        <View style={styles.dropdownContainer}>
+          <Text style={styles.label}>Module Code</Text>
+          <Picker
+            selectedValue={selectedModuleCode}
+            onValueChange={(itemValue) => setSelectedModuleCode(itemValue)}
+            style={styles.dropdown}
+          >
+            <Picker.Item label="Select Module Code" value="" />
+            {selectedYear &&
+              moduleCodesByYear[selectedYear].map((code) => (
+                <Picker.Item key={code} label={code} value={code} />
+              ))}
+          </Picker>
+        </View>
+      </View>
+
+      {/* Add some spacing */}
+      <View style={{ marginBottom: 20 }}></View>
+
       <View style={styles.headerRow}>
         <Text style={styles.headerCell}>Time</Text>
         <Text style={styles.headerCell}>Monday</Text>
@@ -41,6 +71,7 @@ const Schedule = () => {
         <Text style={styles.headerCell}>Thursday</Text>
         <Text style={styles.headerCell}>Friday</Text>
       </View>
+
       {timetable.map((rowData, index) => (
         <View key={index} style={styles.dataRow}>
           <Text style={styles.dataCell}>{rowData.time}</Text>
@@ -59,6 +90,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor:'orange',
+    
+  },
+  dropdowns: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 30,
+    marginTop:49,
+    
+  },
+  dropdownContainer: {
+    flex: 1,
+  },
+  dropdown: {
+    flex: 1,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 4,
   },
   headerRow: {
     flexDirection: 'row',
@@ -86,6 +137,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
   },
+  title:{
+    marginTop:30,
+    textAlign:'center',
+    fontSize:30,
+    color:'black',
+
+  }
 });
 
 export default Schedule;

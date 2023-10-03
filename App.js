@@ -51,9 +51,12 @@ export default function App() {
           component={Schedule}
           options={{
             tabBarLabel: "Schedule",
+            
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="time-outline" size={size} color={color} />
             ),
+            headerShown: false,
+            
           }}
         />
         <Tab.Screen
@@ -61,6 +64,7 @@ export default function App() {
           component={Chat}
           options={{
             tabBarLabel: "Chat",
+            headerShown:false,
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="chatbubbles-outline" size={size} color={color} />
             ),
