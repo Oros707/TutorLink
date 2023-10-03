@@ -1,11 +1,11 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Claims from "./screens/ClaimProcess/Claims";
 import Attendance from "./screens/Attendance";
 import Schedule from "./screens/Schedule";
 import Chat from "./screens/Chat";
 import { Ionicons } from "@expo/vector-icons";
+import ClaimNavigator from "./screens/ClaimProcess/ClaimNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,11 +22,11 @@ export default function App() {
         }}
       >
         <Tab.Screen
-          name="Claims"
-          component={Claims}
+          name="ClaimNavigator"
+          component={ClaimNavigator}
           options={{
             tabBarLabel: "Claims",
-            headerShown: false, // Hide the header
+            headerShown: false, 
             tabBarIcon: ({ color, size }) => (
               <Ionicons
                 name="file-tray-full-outline"

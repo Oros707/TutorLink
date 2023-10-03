@@ -1,8 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Bubbles from '../../components/bubbles';
+import ClaimDetails from './ClaimDetails';
 
-export default function Claims() {
+export default function Claims({ navigation }) {
+  const handleNavigation = () => {
+    navigation.navigate(ClaimDetails)
+  }
   return (
     <View style={styles.container}>
       <Bubbles />
@@ -21,7 +25,7 @@ export default function Claims() {
         Submit and track payment claims easily.
       </Text>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleNavigation}>
         <Text style={styles.buttonText}>Submit a Claim</Text>
       </TouchableOpacity>
     </View>
