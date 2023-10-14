@@ -6,10 +6,11 @@ import BankingDetails from "./BankingDetails";
 import ClaimDetails from "./ClaimDetails";
 import Confirmation from "./Confirmation";
 import TemporaryAppointment from "./TemporaryAppointment";
+import ConfirmationResult from "./ConfirmationResult";
 
 const Stack = createStackNavigator();
 
-const AppNavigator = () => {
+const ClaimNavigator = () => {
   return (
     <>
       <Stack.Navigator initialRouteName="Claims">
@@ -34,7 +35,7 @@ const AppNavigator = () => {
             headerShown: false,
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="TemporaryAppointment"
           component={TemporaryAppointment}
           options={{
@@ -48,10 +49,16 @@ const AppNavigator = () => {
             headerShown: false,
           }}
         />
-       
+        <Stack.Screen
+          name="ConfirmationResult"
+          component={ConfirmationResult}
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
     </>
   );
 };
 
-export default AppNavigator;
+export default ClaimNavigator;

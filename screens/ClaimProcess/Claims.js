@@ -5,7 +5,7 @@ import ClaimDetails from './ClaimDetails';
 
 export default function Claims({ navigation }) {
   const handleNavigation = () => {
-    navigation.navigate(ClaimDetails)
+    navigation.navigate("ClaimDetails")
   }
   return (
     <View style={styles.container}>
@@ -17,16 +17,16 @@ export default function Claims({ navigation }) {
       />
 
       <Text style={styles.tutor}>
-        Claim<Text style={styles.link}>Link!</Text>
+        Let's get make that <Text style={styles.link}>claim!</Text>
       </Text>
 
-      <Text style={styles.topic}>Manage Claims</Text>
+      <Text style={styles.topic}></Text>
       <Text style={styles.text}>
         Submit and track payment claims easily.
       </Text>
 
       <TouchableOpacity style={styles.button} onPress={handleNavigation}>
-        <Text style={styles.buttonText}>Submit a Claim</Text>
+        <Text style={styles.buttonText}>Begin Process</Text>
       </TouchableOpacity>
     </View>
   );
