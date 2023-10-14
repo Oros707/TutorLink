@@ -17,7 +17,7 @@ export default function Claims({ navigation }) {
       />
 
       <Text style={styles.tutor}>
-        Let's get make that <Text style={styles.link}>claim!</Text>
+        Let's make that <Text style={styles.link}>claim!</Text>
       </Text>
 
       <Text style={styles.topic}></Text>
