@@ -6,7 +6,6 @@ import Schedule from "./Schedule";
 import Chat from "./Chat/Chat";
 import { Ionicons } from "@expo/vector-icons";
 import ClaimNavigator from "./ClaimProcess/ClaimNavigator";
-// import NAV1 from "./screens/NAV1";
 
 const Tab = createBottomTabNavigator();
 

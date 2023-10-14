@@ -20,23 +20,31 @@ export default function SignUp({ navigation }) {
       <Bubbles />
 
       <ScrollView style={{ width: "100%", height: "100%" }}>
-        <Text style={styles.tutor}>
-          Tutor<Text style={styles.link}>Link!</Text>
+        <Text style={styles.header}>
+          Welcome to the <Text style={styles.link}>UJ</Text> family!
         </Text>
+        <Text style={{color: "white", fontSize: 20, top: 100, textAlign: "center"}}>Let's get you signed up!</Text>
 
         <Image
           style={styles.image}
-          source={require("../images/Onboarding/signup2.png")}
+          source={require("../images/Onboarding/welcome3.png")}
           alt="image"
         />
 
-        <SafeAreaView style={{ width: "100%", top: 230 }}>
+        <SafeAreaView style={{ width: "100%", top: 50 }}>
           {/* Input fields */}
+          <Text style={styles.require}>*</Text>
+          <TextInput style={styles.input} placeholder="Enter full name" />
+          <Text style={styles.require}>*</Text>
+          <TextInput style={styles.input} placeholder="Enter Student no." />
+          <Text style={styles.require}>*</Text>
           <TextInput style={styles.input} placeholder="Enter student email" />
+
+          <Text style={styles.require}>*</Text>
           <View style={styles.passwordContainer}>
             <TextInput
               style={styles.passwordInput}
-              placeholder="Enter Password"
+              placeholder="Create Password"
               secureTextEntry={!showPassword}
             />
             <TouchableOpacity
@@ -50,10 +58,19 @@ export default function SignUp({ navigation }) {
               />
             </TouchableOpacity>
           </View>
+          <Text style={styles.req}>*</Text>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Confirm Password"
+            secureTextEntry={!showPassword}
+          />
         </SafeAreaView>
 
-        <ScrollView style={{ width: "100%", marginTop: 210 }}>
-          <Text style={styles.forgot}>Forgot password a <Text>*</Text> are required.</Text>
+        <ScrollView style={{ width: "100%", marginTop: 70 }}>
+          <Text style={styles.forgot}>
+            All fields marked with a <Text style={{ color: "red" }}>*</Text> are
+            required.
+          </Text>
 
           <TouchableOpacity
             onPress={() => navigation.navigate("NAV2")}
@@ -64,12 +81,12 @@ export default function SignUp({ navigation }) {
 
           {/* Don't have an account?? */}
           <Text style={styles.signInText}>
-            Already have an account?{"        "}
+            Already have an account?{" "}
             <TouchableOpacity
               onPress={() => navigation.navigate("SignIn")}
               style={styles.contButton}
             >
-              <Text style={styles.blueText}>Signin</Text>
+              <Text style={styles.blueText}>Sign In</Text>
             </TouchableOpacity>
           </Text>
         </ScrollView>
@@ -89,31 +106,24 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   image: {
-    width: 200,
-    height: 200,
+    width: 100,
+    height: 100,
     alignSelf: "center",
     position: "relative",
-    top: 200,
+    top: 130,
   },
-  tutor: {
+  header: {
     color: "white",
     fontWeight: "bold",
-    fontSize: 50,
+    fontSize: 30,
     textAlign: "center",
     position: "relative",
     width: "100%",
-    top: 140,
+    top: 90,
   },
   link: {
     color: "orange",
     fontWeight: "bold",
-  },
-  topic: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 40,
-    textAlign: "center",
-    marginTop: 300,
   },
   button: {
     color: "white",
@@ -125,7 +135,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     position: "relative",
     width: "100%",
-    marginTop: 140,
+    marginTop: 40,
     marginBottom: 30,
   },
   btnText: {
@@ -158,23 +168,23 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "lavender",
     width: "100%",
-    marginTop: 12,
+    marginTop: 2,
   },
   input: {
     width: "100%",
     color: "black",
     borderRadius: 20,
-    borderWidth: 1,
-    marginBottom: 30,
+    marginBottom: 0,
     paddingVertical: 10,
     paddingHorizontal: 20,
     fontSize: 23,
     backgroundColor: "white",
+    top: 90,
   },
   passwordContainer: {
     flexDirection: "row",
     width: "100%",
-    marginBottom: 20,
+    marginTop: 90,
     borderRadius: 20,
     borderColor: "white",
     backgroundColor: "white",
@@ -189,6 +199,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontSize: 23,
     backgroundColor: "white",
+    top: 0,
   },
   togglePasswordVisibility: {
     justifyContent: "center",
@@ -197,5 +208,19 @@ const styles = StyleSheet.create({
     left: -10,
     top: 0,
     paddingHorizontal: 5,
+  },
+  require: {
+    color: "red",
+    fontSize: 25,
+    top: 93,
+    padding: 0,
+    paddingLeft: 13,
+  },
+  req: {
+    color: "red",
+    fontSize: 25,
+    top: 3,
+    padding: 0,
+    paddingLeft: 13,
   },
 });
