@@ -45,8 +45,8 @@ export default function SignIn({ navigation }) {
             >
               <Feather
                 name={showPassword ? "eye" : "eye-off"}
-                size={24}
-                color="grey"
+                size={30}
+                color={showPassword ? "white" : "grey"}
               />
             </TouchableOpacity>
           </View>
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     top: 4,
   },
   forgot: {
-    textAlign: "right",
+    textAlign: "center",
     fontSize: 18,
     color: "white",
     width: "100%",
@@ -191,7 +191,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: -1,
-    left: -20,
+    left: 1,
     top: -13,
+    paddingHorizontal: 5,
   },
 });
