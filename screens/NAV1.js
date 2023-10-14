@@ -8,6 +8,7 @@ import {
   OB3,
   SignIn,
   SignUp,
+  NAV2,
 } from "../screens";
 
 const Stack = createStackNavigator();
@@ -19,6 +20,7 @@ export default function NAV1() {
         <Stack.Screen
           name="SplashScreen"
           component={SplashScreen}
+          
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -41,16 +43,16 @@ export default function NAV1() {
           component={SignIn}
           options={{ headerShown: false }}
         />
-        {/* <Stack.Screen
-          name="Signup"
-          component={Signup}
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Home"
-          component={Home}
+          name="NAV2"
+          component={NAV2}
           options={{ headerShown: false }}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

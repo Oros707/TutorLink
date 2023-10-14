@@ -12,7 +12,7 @@ import {
 import Bubbles from "../components/bubbles";
 import { Feather } from "@expo/vector-icons";
 
-export default function SignIn({ navigation }) {
+export default function SignUp({ navigation }) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -26,7 +26,7 @@ export default function SignIn({ navigation }) {
 
         <Image
           style={styles.image}
-          source={require("../images/Onboarding/login.png")}
+          source={require("../images/Onboarding/signup2.png")}
           alt="image"
         />
 
@@ -53,23 +53,23 @@ export default function SignIn({ navigation }) {
         </SafeAreaView>
 
         <ScrollView style={{ width: "100%", marginTop: 210 }}>
-          <Text style={styles.forgot}>Forgot password?</Text>
+          <Text style={styles.forgot}>Forgot password a <Text>*</Text> are required.</Text>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate("SignUp")}
+            onPress={() => navigation.navigate("NAV2")}
             style={styles.button}
           >
-            <Text style={styles.btnText}>Login</Text>
+            <Text style={styles.btnText}>Signup</Text>
           </TouchableOpacity>
 
           {/* Don't have an account?? */}
-          <Text style={styles.signupText}>
-            Don't have an account?{" "}
+          <Text style={styles.signInText}>
+            Already have an account?{"        "}
             <TouchableOpacity
-              onPress={() => navigation.navigate("SignUp")}
+              onPress={() => navigation.navigate("SignIn")}
               style={styles.contButton}
             >
-              <Text style={styles.blueText}>Sign Up</Text>
+              <Text style={styles.blueText}>Signin</Text>
             </TouchableOpacity>
           </Text>
         </ScrollView>
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     textAlign: "left",
   },
-  signupText: {
+  signInText: {
     color: "white",
     textAlign: "center",
     fontSize: 18,

@@ -1,20 +1,21 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Attendance from "./screens/Attendance/Attendance";
-import Schedule from "./screens/Schedule";
-import Chat from "./screens/Chat/Chat";
+import Attendance from "./Attendance/Attendance";
+import Schedule from "./Schedule";
+import Chat from "./Chat/Chat";
 import { Ionicons } from "@expo/vector-icons";
-import ClaimNavigator from "./screens/ClaimProcess/ClaimNavigator";
-import NAV1 from "./screens/NAV1";
+import ClaimNavigator from "./ClaimProcess/ClaimNavigator";
+// import NAV1 from "./screens/NAV1";
 
 const Tab = createBottomTabNavigator();
 
 export default function NAV2() {
   return (
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
       <Tab.Navigator
-        initialRouteName="NAV1"
+        initialRouteName="NAV2"
+        independent={true}
         screenOptions={{
           tabBarActiveTintColor: "orange",
           tabBarInactiveTintColor: "white",
