@@ -12,10 +12,13 @@ export default function Bubbles() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0,
+    flex: -1,
     justifyContent: "left",
     alignItems: "left",
     backgroundColor: "black",
+    width: "100%",
+    height: "100%",
+    position: "absolute",
   },
   circle1: {
     width: 200,
@@ -23,8 +26,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     backgroundColor: "rgba(255, 165, 0, 0.7)",
     position: "absolute",
-    top: -150,
-    left: -150,
+    top: 10,
+    left: -130,
   },
   circle2: {
     width: 200,
@@ -32,7 +35,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     backgroundColor: "rgba(255, 165, 0, 0.7)",
     position: "absolute",
-    top: -250,
+    top: -100,
     left: -50,
   },
 });

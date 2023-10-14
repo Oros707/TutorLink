@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Bubbles from "../components/bubbles";
+import { useNavigation } from "@react-navigation/native";
 
 export default function SplashScreen() {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Bubbles />
@@ -20,10 +22,12 @@ export default function SplashScreen() {
         Payment claims, timesheets, and tutor session schedules all in one place
       </Text>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("OB1")}
+        style={styles.button}
+      >
         <Text style={styles.topic}>Get Started</Text>
       </TouchableOpacity>
-
     </View>
   );
 }
