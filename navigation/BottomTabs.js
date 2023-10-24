@@ -11,7 +11,7 @@ const Tab = createBottomTabNavigator();
 const BottomTabs = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Claims"
+      initialRouteName="ClaimNavigator"
       screenOptions={{
         tabBarActiveTintColor: "orange",
         tabBarInactiveTintColor: "white",

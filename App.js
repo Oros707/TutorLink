@@ -1,11 +1,10 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import NAV1 from "./navigation/NAV1";
-
+import AppNav from "./navigation/AppNav";
 export default function App() {
   return (
     <View style={styles.container}>
-      <NAV1 />
+      <AppNav />
     </View>
   );
 }

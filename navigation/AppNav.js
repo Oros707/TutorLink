@@ -2,12 +2,13 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import BottomTabs from "./BottomTabs";
-import SplashScreen from "../screens/splashscreen";
+import SplashScreen from "../screens/SplashScreen";
 import OB1 from "../screens/OB1";
 import OB2 from "../screens/OB2";
 import OB3 from "../screens/OB3";
 import SignIn from "../screens/SignIn";
 import SignUp from "../screens/SignUp";
+
 
 const Stack = createStackNavigator();
 
