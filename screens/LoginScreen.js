@@ -67,39 +67,39 @@ export default function LoginScreen() {
               borderTopLeftRadius: 50,
               borderTopRightRadius: 50,
               backgroundColor: "white",
-              padding: 16, // Increased padding for better spacing
+              padding: 16,
             }}
           >
             <View>
               <TextInput
                 style={{
-                  padding: 12, // Increased padding for better input field size
-                  backgroundColor: "#F5F5F5", // Light gray background
-                  borderRadius: 10, // Rounded corners
-                  marginBottom: 12, // Increased margin for spacing
+                  padding: 12,
+                  backgroundColor: "#F5F5F5",
+                  borderRadius: 10,
+                  marginBottom: 12,
                 }}
-                placeholder="email"
+                placeholder="Email"
                 value={email}
                 onChangeText={(value) => setEmail(value)}
               />
               <TextInput
                 style={{
-                  padding: 12, // Increased padding for better input field size
-                  backgroundColor: "#F5F5F5", // Light gray background
-                  borderRadius: 10, // Rounded corners
-                  marginBottom: 16, // Increased margin for spacing
+                  padding: 12,
+                  backgroundColor: "#F5F5F5",
+                  borderRadius: 10,
+                  marginBottom: 16,
                 }}
                 secureTextEntry
-                placeholder="password"
+                placeholder="Password"
                 value={password}
                 onChangeText={(value) => setPassword(value)}
               />
               <TouchableOpacity
                 onPress={handleSubmit}
                 style={{
-                  padding: 14, // Increased padding for better button size
-                  backgroundColor: "yellow",
-                  borderRadius: 10, // Rounded corners
+                  padding: 14,
+                  backgroundColor: "orange",
+                  borderRadius: 10,
                 }}
               >
                 <Text
@@ -107,7 +107,7 @@ export default function LoginScreen() {
                     fontSize: 20,
                     fontWeight: "bold",
                     textAlign: "center",
-                    color: "gray",
+                    color: "white",
                   }}
                 >
                   Login
@@ -128,15 +128,14 @@ export default function LoginScreen() {
                 style={{
                   flexDirection: "row",
                   justifyContent: "center",
-                  marginVertical: 12, // Increased margin for spacing
+                  marginVertical: 12,
                 }}
               >
                 <TouchableOpacity
                   style={{
-                    padding: 12, // Increased padding for better button size
-                    backgroundColor: "gray",
-                    borderRadius: 10, // Rounded corners
-                    marginRight: 16, // Increased margin for spacing
+                    padding: 12,
+                    borderRadius: 10,
+                    marginRight: 16,
                   }}
                 >
                   <Image
@@ -146,8 +145,7 @@ export default function LoginScreen() {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={{
-                    padding: 12, // Increased padding for better button size
-                    backgroundColor: "gray",
+                    padding: 12,
                     borderRadius: 10, // Rounded corners
                   }}
                 >
@@ -161,7 +159,7 @@ export default function LoginScreen() {
                 style={{
                   flexDirection: "row",
                   justifyContent: "center",
-                  marginTop: 12, // Increased margin for spacing
+                  marginTop: 12,
                 }}
               >
                 <Text style={{ color: "gray", fontWeight: "bold" }}>
@@ -170,7 +168,7 @@ export default function LoginScreen() {
                 <TouchableOpacity
                   onPress={() => navigation.navigate("SignUpScreen")}
                 >
-                  <Text style={{ fontWeight: "bold", color: "yellow" }}>
+                  <Text style={{ fontWeight: "bold", color: "orange" }}>
                     Sign Up
                   </Text>
                 </TouchableOpacity>
