@@ -1,18 +1,9 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import {
-  SplashScreen,
-  OB1,
-  OB2,
-  OB3,
-  SignIn,
-  SignUp,
-  NAV2,
-
-} from "../screens";
-import LoginScreen from '../screens/LoginScreen';
-import SignUpScreen from '../screens/SignUpScreen';
+import { SplashScreen, OB1, OB2, OB3, NAV2 } from "../screens";
+import LoginScreen from "../screens/LoginScreen";
+import SignUpScreen from "../screens/SignUpScreen";
 
 const Stack = createStackNavigator();
 
@@ -23,7 +14,6 @@ export default function NAV1() {
         <Stack.Screen
           name="SplashScreen"
           component={SplashScreen}
-          
           options={{ headerShown: false }}
         />
         <Stack.Screen
