@@ -134,7 +134,7 @@ export default function LoginScreen() {
                 <TouchableOpacity
                   style={{
                     padding: 12, // Increased padding for better button size
-                    backgroundColor: "gray",
+                    // backgroundColor: "gray",
                     borderRadius: 10, // Rounded corners
                     marginRight: 16, // Increased margin for spacing
                   }}
@@ -147,7 +147,7 @@ export default function LoginScreen() {
                 <TouchableOpacity
                   style={{
                     padding: 12, // Increased padding for better button size
-                    backgroundColor: "gray",
+                    // backgroundColor: "gray",
                     borderRadius: 10, // Rounded corners
                   }}
                 >
