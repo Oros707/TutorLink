@@ -20,7 +20,7 @@ export default function OB3({ navigation }) {
       classes in one place!</Text>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate("SignIn")}
+        onPress={() => navigation.navigate("LoginScreen")}
         style={styles.button}
       >
         <Text style={styles.btnText}>Next</Text>
