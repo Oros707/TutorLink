@@ -98,13 +98,13 @@ export default function SignUpScreen() {
         </View>
         <Text style={{ fontSize: 20, color: 'gray', fontWeight: 'bold', textAlign: 'center', paddingTop: 5 }}>Or</Text>
         <View style={{marginBottom:80 ,flexDirection: 'row', justifyContent: 'center', marginVertical: 7 }}>
-          <TouchableOpacity style={{ padding: 2, backgroundColor: 'gray', borderRadius: 20 ,marginRight: 10}}>
+          <TouchableOpacity style={{ padding: 2,  borderRadius: 20 ,marginRight: 10}}>
             <Image
               source={require('../assets/icons/google.png')}
               style={{ width: 40, height: 40 }}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={{ padding: 6, backgroundColor: 'gray', borderRadius: 20 }}>
+          <TouchableOpacity style={{ padding: 6, borderRadius: 20 }}>
               <Image
                 source={require('../assets/icons/apple.png')}
                 style={{ width: 40, height: 40 }}
