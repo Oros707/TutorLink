@@ -9,7 +9,10 @@ import {
   SignIn,
   SignUp,
   NAV2,
+
 } from "../screens";
+import LoginScreen from '../screens/LoginScreen';
+import SignUpScreen from '../screens/SignUpScreen';
 
 const Stack = createStackNavigator();
 
@@ -39,13 +42,13 @@ export default function NAV1() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="SignIn"
-          component={SignIn}
+          name="LoginScreen"
+          component={LoginScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="SignUp"
-          component={SignUp}
+          name="SignUpScreen"
+          component={SignUpScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
