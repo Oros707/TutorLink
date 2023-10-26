@@ -153,7 +153,7 @@ export default function SignUpScreen() {
               <TouchableOpacity
                 style={{
                   padding: 12,
-                  backgroundColor: "transparent", // Transparent background
+                  backgroundColor: "gray",
                   borderRadius: 10,
                   marginRight: 16,
                 }}
@@ -166,7 +166,7 @@ export default function SignUpScreen() {
               <TouchableOpacity
                 style={{
                   padding: 12,
-                  backgroundColor: "transparent", // Transparent background
+                  backgroundColor: "gray",
                   borderRadius: 10,
                 }}
               >
