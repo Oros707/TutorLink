@@ -22,6 +22,7 @@ export default function SignUpScreen() {
   const navigation = useNavigation();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(""); // Add phoneNumber state
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
@@ -38,14 +39,24 @@ export default function SignUpScreen() {
     return /\S+@\S+\.\S+/.test(email);
   };
 
+  const validatePhoneNumber = (phoneNumber) => {
+    // Simple phone number validation to ensure it contains exactly 10 digits
+    return /^\d{10}$/.test(phoneNumber);
+  };
+
   const handleSubmit = async () => {
-    if (!fullName || !email || !password) {
+    if (!fullName || !email || !password || !phoneNumber) {
       setError("Please fill in all the fields.");
       return;
     }
 
     if (!validateEmail(email)) {
       setError("Invalid email format. Please check your email address.");
+      return;
+    }
+
+    if (!validatePhoneNumber(phoneNumber)) {
+      setError("Phone number must contain 10 digits.");
       return;
     }
 
@@ -132,6 +143,22 @@ export default function SignUpScreen() {
                 value={email}
                 onChangeText={(value) => setEmail(value)}
                 placeholder="Enter Email"
+              />
+              <Text style={{ color: "gray", marginBottom: 4 }}>
+                Phone Number
+              </Text>
+              <TextInput
+                style={{
+                  padding: 12,
+                  backgroundColor: "#F5F5F5",
+                  color: "black",
+                  borderRadius: 10,
+                  marginBottom: 12,
+                }}
+                value={phoneNumber}
+                onChangeText={(value) => setPhoneNumber(value)}
+                placeholder="Enter Phone Number"
+                keyboardType="numeric"
               />
               <Text style={{ color: "gray", marginBottom: 4 }}>Password</Text>
               <TextInput
