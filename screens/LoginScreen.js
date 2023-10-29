@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,9 +6,11 @@ import {
   Image,
   TextInput,
   ScrollView,
+  ActivityIndicator,
+  StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ArrowLeftIcon } from "react-native-heroicons/solid";
+import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase";
@@ -18,17 +20,36 @@ export default function LoginScreen() {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const errorMessages = {
+    "auth/user-not-found": "User not found. Please check your email.",
+    "auth/invalid-email": "Invalid email. Please check your email address.",
+    "auth/invalid-login-credentials": "Incorrect password. Please try again.",
+    "auth/too-many-requests":
+      "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or try again later.",
+  };
 
   const handleSubmit = async () => {
     if (email && password) {
       try {
+        setLoading(true);
+        setError(null);
         await signInWithEmailAndPassword(auth, email, password);
         navigation.navigate("NAV2");
       } catch (err) {
         console.log("got error: ", err.message);
+        setError(errorMessages[err.code] || err.message);
+        setLoading(false);
       }
     }
   };
+
+  useEffect(() => {
+    setError(null);
+    setLoading(false);
+  }, [email, password]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: themeColors.bg }}>
@@ -41,20 +62,7 @@ export default function LoginScreen() {
                 justifyContent: "flex-start",
                 padding: 8,
               }}
-            >
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{
-                  backgroundColor: "yellow",
-                  padding: 2,
-                  borderTopRightRadius: 20,
-                  borderBottomLeftRadius: 20,
-                  marginLeft: 4,
-                }}
-              >
-                <ArrowLeftIcon size="20" color="black" />
-              </TouchableOpacity>
-            </View>
+            ></View>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <Image
                 source={require("../assets/images/login.png")}
@@ -101,6 +109,7 @@ export default function LoginScreen() {
                   backgroundColor: "orange",
                   borderRadius: 10,
                 }}
+                disabled={loading}
               >
                 <Text
                   style={{
@@ -113,7 +122,20 @@ export default function LoginScreen() {
                   Login
                 </Text>
               </TouchableOpacity>
+              {loading && (
+                <View style={styles.overlay}>
+                  <ActivityIndicator size="large" color="orange" />
+                </View>
+              )}
             </View>
+            {error && (
+              <Text
+                style={{ color: "red", textAlign: "center", marginTop: 12 }}
+              >
+                {error}
+              </Text>
+            )}
+
             <View
               style={{
                 marginBottom: 80,
@@ -121,38 +143,42 @@ export default function LoginScreen() {
                 alignItems: "center",
               }}
             >
-              <Text style={{ fontSize: 20, color: "gray", fontWeight: "bold" }}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "gray",
+                  fontWeight: "bold",
+                  marginVertical: 12,
+                }}
+              >
                 Or
               </Text>
               <View
                 style={{
                   flexDirection: "row",
                   justifyContent: "center",
-                  marginVertical: 12,
+                  alignItems: "center",
+                  gap: 10,
                 }}
               >
                 <TouchableOpacity
                   style={{
                     padding: 12,
                     borderRadius: 10,
-                    marginRight: 16,
                   }}
                 >
                   <Image
                     source={require("../assets/icons/google.png")}
-                    style={{ width: 40, height: 40 }}
+                    style={{ height: 48, width: 48 }}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={{
                     padding: 12,
-                    borderRadius: 10, // Rounded corners
+                    borderRadius: 10,
                   }}
                 >
-                  <Image
-                    source={require("../assets/icons/apple.png")}
-                    style={{ width: 40, height: 40 }}
-                  />
+                  <AntDesign name="apple1" size={48} color="black" />
                 </TouchableOpacity>
               </View>
               <View
@@ -180,3 +206,12 @@ export default function LoginScreen() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

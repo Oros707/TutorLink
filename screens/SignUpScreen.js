@@ -7,26 +7,60 @@ import {
   TextInput,
   ScrollView,
 } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { useNavigation } from "@react-navigation/native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  fetchSignInMethodsForEmail,
+} from "firebase/auth";
 import { auth } from "../config/firebase";
 import { themeColors } from "../theme";
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+
+  const errorMessages = {
+    "auth/email-already-in-use":
+      "This email address is already associated with an account. Sign in if it's your account.",
+    "auth/invalid-email": "Invalid email. Please check your email address.",
+    "auth/too-many-requests":
+      "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or try again later.",
+  };
+
+  const validateEmail = (email) => {
+    // Simple email validation using a regular expression
+    return /\S+@\S+\.\S+/.test(email);
+  };
 
   const handleSubmit = async () => {
-    if (email && password) {
-      try {
+    if (!fullName || !email || !password) {
+      setError("Please fill in all the fields.");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setError("Invalid email format. Please check your email address.");
+      return;
+    }
+
+    try {
+      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+      if (signInMethods.length > 0) {
+        setError(errorMessages["auth/email-already-in-use"]);
+      } else {
+        // Email is available, create a new account
         await createUserWithEmailAndPassword(auth, email, password);
         navigation.navigate("LoginScreen");
-      } catch (err) {
-        console.log("got error: ", err.message);
       }
+    } catch (err) {
+      console.log("Error: ", err.message);
+      setError(errorMessages[err.code] || err.message);
     }
   };
 
@@ -45,7 +79,7 @@ export default function SignUpScreen() {
               <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 style={{
-                  backgroundColor: "yellow",
+                  backgroundColor: "orange",
                   padding: 2,
                   borderTopRightRadius: 20,
                   borderBottomLeftRadius: 20,
@@ -81,6 +115,8 @@ export default function SignUpScreen() {
                   marginBottom: 12,
                 }}
                 placeholder="Enter Name"
+                value={fullName}
+                onChangeText={(value) => setFullName(value)}
               />
               <Text style={{ color: "gray", marginBottom: 4 }}>
                 Email Address
@@ -114,7 +150,7 @@ export default function SignUpScreen() {
               <TouchableOpacity
                 style={{
                   padding: 14,
-                  backgroundColor: "yellow",
+                  backgroundColor: "orange",
                   borderRadius: 10,
                 }}
                 onPress={handleSubmit}
@@ -124,56 +160,59 @@ export default function SignUpScreen() {
                     fontSize: 20,
                     fontWeight: "bold",
                     textAlign: "center",
-                    color: "gray",
+                    color: "white",
                   }}
                 >
                   Sign Up
                 </Text>
               </TouchableOpacity>
             </View>
+            {error && (
+              <Text
+                style={{ color: "red", textAlign: "center", marginTop: 12 }}
+              >
+                {error}
+              </Text>
+            )}
             <Text
               style={{
                 fontSize: 20,
-                color: "gray",
                 fontWeight: "bold",
                 textAlign: "center",
                 paddingTop: 5,
+                color: "gray",
+                marginVertical: 12,
               }}
             >
               Or
             </Text>
             <View
               style={{
-                marginBottom: 80,
+                marginBottom: 60,
                 flexDirection: "row",
                 justifyContent: "center",
-                marginVertical: 12,
+                alignItems: "center",
+                gap: 10,
               }}
             >
               <TouchableOpacity
                 style={{
                   padding: 12,
-                  backgroundColor: "gray",
                   borderRadius: 10,
-                  marginRight: 16,
                 }}
               >
                 <Image
                   source={require("../assets/icons/google.png")}
-                  style={{ width: 40, height: 40 }}
+                  style={{ height: 48 }}
                 />
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
                   padding: 12,
-                  backgroundColor: "gray",
                   borderRadius: 10,
                 }}
               >
-                <Image
-                  source={require("../assets/icons/apple.png")}
-                  style={{ width: 40, height: 40 }}
-                />
+                <AntDesign name="apple1" size={48} color="black" />
               </TouchableOpacity>
             </View>
             <View
@@ -198,7 +237,7 @@ export default function SignUpScreen() {
                 <Text
                   style={{
                     fontWeight: "bold",
-                    color: "yellow",
+                    color: "orange",
                   }}
                 >
                   Login
