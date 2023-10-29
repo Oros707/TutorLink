@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { SplashScreen, OB1, OB2, OB3, NAV2 } from "../screens";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
+import ForgotPassword from "./ForgotPassword";
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,11 @@ export default function NAV1() {
         <Stack.Screen
           name="SignUpScreen"
           component={SignUpScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ForgotPassword"
+          component={ForgotPassword}
           options={{ headerShown: false }}
         />
         <Stack.Screen
