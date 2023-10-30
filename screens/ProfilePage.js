@@ -4,12 +4,10 @@ import { signOut, onAuthStateChanged } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "../config/firebase"; // Import your Firebase config
 
-
-const ProfilePage = ({navigation}) => {
+const ProfilePage = ({ navigation }) => {
   const [userData, setUserData] = useState({});
   const [isVisible, setIsVisible] = useState(false);
   const user = auth.currentUser;
-
 
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
@@ -45,14 +43,14 @@ const ProfilePage = ({navigation}) => {
   };
   return isVisible ? (
     <View style={styles.container}>
-        <Image style={styles.profileImage}
-                source={require("../assets/images/signup.png")}
-                
-              />
-      
+      <Image
+        style={styles.profileImage}
+        source={require("../assets/images/signup.png")}
+      />
+
       <Text style={styles.userName}>{userData.fullName}</Text>
       <Text style={styles.userEmail}>{userData.email}</Text>
-      
+
       <Button title="Sign Out" onPress={handleSignOut} />
     </View>
   ) : null;
@@ -63,7 +61,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom:170
+    marginBottom: 170,
   },
   profileImage: {
     width: 150,

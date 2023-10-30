@@ -7,8 +7,20 @@ const Stack = createStackNavigator();
 const LogoutNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="ProfilePage" component={ProfilePage} />
-      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen
+        name="ProfilePage"
+        component={ProfilePage}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack.Navigator>
   );
 };

@@ -54,17 +54,16 @@ export default function NAV1() {
           component={NAV2}
           options={{ headerShown: false }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="AdminPage"
           component={AdminPage}
           options={{ headerShown: false }}
         />
-      <Stack.Screen
+        <Stack.Screen
           name="ProfilePage"
           component={ProfilePage}
           options={{ headerShown: false }}
         />
-
       </Stack.Navigator>
     </NavigationContainer>
   );
