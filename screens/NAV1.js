@@ -5,6 +5,8 @@ import { SplashScreen, OB1, OB2, OB3, NAV2 } from "../screens";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import ForgotPassword from "./ForgotPassword";
+import AdminPage from "./AdminPage";
+import ProfilePage from "./ProfilePage";
 
 const Stack = createStackNavigator();
 
@@ -52,6 +54,17 @@ export default function NAV1() {
           component={NAV2}
           options={{ headerShown: false }}
         />
+         <Stack.Screen
+          name="AdminPage"
+          component={AdminPage}
+          options={{ headerShown: false }}
+        />
+      <Stack.Screen
+          name="ProfilePage"
+          component={ProfilePage}
+          options={{ headerShown: false }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

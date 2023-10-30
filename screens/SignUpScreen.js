@@ -15,8 +15,9 @@ import {
   createUserWithEmailAndPassword,
   fetchSignInMethodsForEmail,
 } from "firebase/auth";
-import { auth } from "../config/firebase";
+import { auth,db } from "../config/firebase";
 import { themeColors } from "../theme";
+import { addDoc, collection, doc, setDoc } from '@firebase/firestore';
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
@@ -49,31 +50,57 @@ export default function SignUpScreen() {
       setError("Please fill in all the fields.");
       return;
     }
-
+  
     if (!validateEmail(email)) {
       setError("Invalid email format. Please check your email address.");
       return;
     }
-
+  
     if (!validatePhoneNumber(phoneNumber)) {
       setError("Phone number must contain 10 digits.");
       return;
     }
-
+  
+    if (email.toLowerCase() === "nomsaadmin@gmail.com") {
+      setError("Sign-up with this email is restricted.");
+      return;
+    }
+  
     try {
-      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-      if (signInMethods.length > 0) {
-        setError(errorMessages["auth/email-already-in-use"]);
-      } else {
-        // Email is available, create a new account
-        await createUserWithEmailAndPassword(auth, email, password);
-        navigation.navigate("LoginScreen");
-      }
+      createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+
+                    // Saving user data in Firestore
+                    setDoc(doc(db, "users", user.uid), {
+                      email: email,
+                      fullName: fullName,
+                      phoneNumber:phoneNumber
+                      // Avoid saving the password in Firestore
+                    }).then(() => {
+                      // Navigate after successfully adding to Firestore
+
+                      navigation.navigate("LoginScreen");
+                      setEmail("");
+                      setFullName("");
+                      setPassword("");
+                      setPhoneNumber("")
+                    });
+                })
+
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorMessage);
+                    console.log(errorCode)
+
+                });
     } catch (err) {
       console.log("Error: ", err.message);
       setError(errorMessages[err.code] || err.message);
     }
   };
+  
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: themeColors.bg }}>

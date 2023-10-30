@@ -37,7 +37,13 @@ export default function LoginScreen() {
         setLoading(true);
         setError(null);
         await signInWithEmailAndPassword(auth, email, password);
-        navigation.navigate("NAV2");
+  
+        // Check if the email is "NomsaAdmin@gmail.com" and redirect to the AdminPage
+        if (email.toLowerCase() === "nomsaadmin@gmail.com") {
+          navigation.navigate("AdminPage");
+        } else {
+          navigation.navigate("NAV2");
+        }
       } catch (err) {
         console.log("got error: ", err.message);
         setError(errorMessages[err.code] || err.message);
@@ -45,6 +51,7 @@ export default function LoginScreen() {
       }
     }
   };
+  
 
   useEffect(() => {
     setError(null);
