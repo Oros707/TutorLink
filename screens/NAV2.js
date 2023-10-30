@@ -7,7 +7,7 @@ import Attendance from "./Attendance/Attendance";
 import Schedule from "./Schedule";
 import Chat from "./Chat/Chat";
 import ClaimNavigator from "./ClaimProcess/ClaimNavigator";
-import UserPage from "./UserPage";
+import LogoutNavigator from "../navigation/logoutNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -70,8 +70,8 @@ export default function NAV2() {
           }}
         />
         <Tab.Screen
-          name="UserPage"
-          component={UserPage}
+          name="LogoutNavigator"
+          component={LogoutNavigator}
           options={{
             tabBarLabel: "Profile",
             tabBarIcon: ({ color, size }) => (

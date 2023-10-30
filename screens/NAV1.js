@@ -52,6 +52,7 @@ export default function NAV1() {
           component={NAV2}
           options={{ headerShown: false }}
         />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

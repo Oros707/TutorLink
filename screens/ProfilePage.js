@@ -1,22 +1,19 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Alert, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { auth, signOut, deleteUser } from "../config/firebase";
+import { auth } from "../config/firebase";
 
-export default function UserPage() {
-  const navigation = useNavigation();
+export default function ProfilePage({ navigation }) {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth); // Sign out the current user
-      navigation.navigate("LoginScreen"); // Navigate to the login screen after logout
+      // await signOut(auth);
+      navigation.navigate("LoginScreen");
     } catch (error) {
       console.error("Error logging out:", error);
     }
   };
 
   const handleDeleteAccount = () => {
-    // Show a confirmation dialog to confirm account deletion
     Alert.alert(
       "Confirm Account Deletion",
       "Are you sure you want to delete your account? This action cannot be undone.",
@@ -50,7 +47,10 @@ export default function UserPage() {
       <TouchableOpacity style={styles.button} onPress={handleLogout}>
         <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.deleteButton} onPress={handleDeleteAccount}>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={handleDeleteAccount}
+      >
         <Text style={styles.buttonText}>Delete Account</Text>
       </TouchableOpacity>
     </View>

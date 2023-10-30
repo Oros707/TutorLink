@@ -32,6 +32,7 @@ export default function LoginScreen() {
   };
 
   const handleSubmit = async () => {
+    
     if (email && password) {
       try {
         setLoading(true);
