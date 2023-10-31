@@ -48,8 +48,9 @@ const ProfilePage = ({ navigation }) => {
         source={require("../assets/images/signup.png")}
       />
 
-      <Text style={styles.userName}>{userData.fullName}</Text>
-      <Text style={styles.userEmail}>{userData.email}</Text>
+      <Text style={styles.userName}><Text>Name: </Text> {userData.fullName}</Text>
+      <Text style={styles.userEmail}> <Text>Email: </Text>{userData.email}</Text>
+      <Text style={styles.Phone}><Text>Phone Number: </Text>{userData.phoneNumber}</Text>
 
       <Button title="Sign Out" onPress={handleSignOut} />
     </View>
@@ -64,9 +65,9 @@ const styles = StyleSheet.create({
     marginBottom: 170,
   },
   profileImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75, // to make it a circle
+    width: 230,
+    height: 230,
+    borderRadius: 75, 
     marginBottom: 20,
   },
   userName: {
@@ -78,7 +79,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "gray",
   },
-  // Add more styling for additional user details
+  Phone: {
+    fontWeight:13,
+    fontSize:22
+  }
 });
 
 export default ProfilePage;

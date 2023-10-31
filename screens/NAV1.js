@@ -7,6 +7,7 @@ import SignUpScreen from "../screens/SignUpScreen";
 import ForgotPassword from "./ForgotPassword";
 import AdminPage from "./AdminPage";
 import ProfilePage from "./ProfilePage";
+import AdminNavigator from "./AdminNavigator";
 
 const Stack = createStackNavigator();
 
@@ -55,8 +56,8 @@ export default function NAV1() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="AdminPage"
-          component={AdminPage}
+          name="AdminNavigator"
+          component={AdminNavigator}
           options={{ headerShown: false }}
         />
         <Stack.Screen
