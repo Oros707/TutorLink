@@ -23,7 +23,7 @@ export default function SignUpScreen() {
   const navigation = useNavigation();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState(""); // Add phoneNumber state
+  const [phoneNumber, setPhoneNumber] = useState(""); 
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
@@ -36,12 +36,10 @@ export default function SignUpScreen() {
   };
 
   const validateEmail = (email) => {
-    // Simple email validation using a regular expression
     return /\S+@\S+\.\S+/.test(email);
   };
 
   const validatePhoneNumber = (phoneNumber) => {
-    // Simple phone number validation to ensure it contains exactly 10 digits
     return /^\d{10}$/.test(phoneNumber);
   };
 
