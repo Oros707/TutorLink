@@ -87,35 +87,39 @@ export default function ClaimDetails() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: '#333', // Dark grey background color
+    padding: 20,
+    backgroundColor: "#333",
+    // paddingBottom: 16,
   },
   label: {
-    color: 'orange', // Orange text color
+    color: "orange", // Orange text color
     fontSize: 16,
-    marginTop: 8,
+    marginTop: 80,
+    marginBottom: 20,
+    fontSize: 25,
+    textAlign: "center",
   },
   inputLabel: {
-    color: 'white', // White text color for input labels
-    fontSize: 16,
+    color: "white", // White text color for input labels
+    fontSize: 18,
     marginTop: 12,
   },
   input: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 4,
     padding: 8,
     fontSize: 16,
     marginTop: 4,
   },
   button: {
-    backgroundColor: 'orange', // Orange button background color
+    backgroundColor: "orange", // Orange button background color
     borderRadius: 4,
     padding: 12,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 16,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
   },
 });

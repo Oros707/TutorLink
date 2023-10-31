@@ -1,13 +1,15 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import NAV1 from "./screens/NAV1";
+import NAV2 from "./screens/NAV2";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <NAV1 />
-    </View>
+    <GestureHandlerRootView style={styles.container}>
+      <NAV2 />
+    </GestureHandlerRootView>
   );
 }
 
