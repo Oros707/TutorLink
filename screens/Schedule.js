@@ -37,7 +37,8 @@ const Schedule = () => {
             const dayCollectionRef = collection(db, 'timetable', academicYear, day);
             const dayDocs = await getDocs(dayCollectionRef);
             dayDocs.forEach((doc) => {
-              data.push({ day, slot: doc.id, ...doc.data() });
+              const [startTime, endTime] = doc.id.split('-'); // Split the slot into start and end times
+              data.push({ day, startTime, endTime, module: doc.data().module });
             });
           });
           setTimetableData(data);
@@ -70,9 +71,11 @@ const Schedule = () => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <View style={styles.timetableCard}>
-              <Text style={styles.timetableSlot}>{item.day} - {item.slot}</Text>
+              <Text style={styles.timetableSlot}>{item.day}</Text>
               <Text style={styles.timetableModule}>{item.module}</Text>
-              <Text style={styles.timetableEndTime}>Ends at: {item.endTime}</Text>
+              <Text style={styles.timetableTime}>
+                {item.startTime} - {item.endTime}
+              </Text>
             </View>
           )}
         />
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'gray',
   },
-  timetableEndTime: {
+  timetableTime: {
     fontSize: 14,
     color: 'blue',
   },
