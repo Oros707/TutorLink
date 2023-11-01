@@ -41,6 +41,7 @@ const ProfilePage = ({ navigation }) => {
       console.error("Error signing out:", error);
     }
   };
+
   return isVisible ? (
     <View style={styles.container}>
       <Image
@@ -48,9 +49,17 @@ const ProfilePage = ({ navigation }) => {
         source={require("../assets/images/signup.png")}
       />
 
-      <Text style={styles.userName}><Text>Name: </Text> {userData.fullName}</Text>
-      <Text style={styles.userEmail}> <Text>Email: </Text>{userData.email}</Text>
-      <Text style={styles.Phone}><Text>Phone Number: </Text>{userData.phoneNumber}</Text>
+      <Text style={styles.userName}>
+        <Text style={styles.label}>Name: </Text> {userData.fullName}
+      </Text>
+      <Text style={styles.userEmail}>
+        <Text style={styles.label}>Email: </Text>
+        {userData.email}
+      </Text>
+      <Text style={styles.Phone}>
+        <Text style={styles.label}>Phone Number: </Text>
+        {userData.phoneNumber}
+      </Text>
 
       <Button title="Sign Out" onPress={handleSignOut} />
     </View>
@@ -67,7 +76,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 230,
     height: 230,
-    borderRadius: 75, 
+    borderRadius: 115, // Half the width and height to make it a circle
     marginBottom: 20,
   },
   userName: {
@@ -80,9 +89,11 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   Phone: {
-    fontWeight:13,
-    fontSize:22
-  }
+    fontSize: 22,
+  },
+  label: {
+    fontWeight: "bold",
+  },
 });
 
 export default ProfilePage;
