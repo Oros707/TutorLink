@@ -8,6 +8,7 @@ const Schedule = () => {
   const [academicYears, setAcademicYears] = useState([]);
   const [academicYear, setAcademicYear] = useState('');
   const [timetableData, setTimetableData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchAcademicYears = async () => {
@@ -31,6 +32,7 @@ const Schedule = () => {
     if (academicYear) {
       const fetchTimetableData = async () => {
         try {
+          setLoading(true);
           const dayOfWeeks = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
           const data = [];
           dayOfWeeks.forEach(async (day) => {
@@ -42,8 +44,10 @@ const Schedule = () => {
             });
           });
           setTimetableData(data);
+          setLoading(false);
         } catch (error) {
           console.error('Error retrieving timetable data:', error);
+          setLoading(false);
         }
       };
 
@@ -61,28 +65,33 @@ const Schedule = () => {
         style={pickerSelectStyles}
       />
 
-      <View style={styles.timetableContainer}>
-        <Text style={styles.timetableTitle}>
-          Timetable for {academicYear}
-        </Text>
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <View style={styles.timetableContainer}>
+          <Text style={styles.timetableTitle}>
+            Timetable for {academicYear}
+          </Text>
 
-        <FlatList
-          data={timetableData}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.timetableCard}>
-              <Text style={styles.timetableSlot}>{item.day}</Text>
-              <Text style={styles.timetableModule}>{item.module}</Text>
-              <Text style={styles.timetableTime}>
-                {item.startTime} - {item.endTime}
-              </Text>
-            </View>
-          )}
-        />
-      </View>
+          <FlatList
+            data={timetableData}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.timetableCard}>
+                <Text style={styles.timetableSlot}>{item.day}</Text>
+                <Text style={styles.timetableModule}>{item.module}</Text>
+                <Text style={styles.timetableTime}>
+                  {item.startTime} - {item.endTime}
+                </Text>
+              </View>
+            )}
+          />
+        </View>
+      )}
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
