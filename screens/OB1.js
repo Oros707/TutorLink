@@ -19,7 +19,7 @@ export default function OB1({ navigation }) {
       <Text style={styles.topic}>Make claims!</Text>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate("OB2")}
+        onPress={() => navigation.replace("OB2")}
         style={styles.button}
       >
         <Text style={styles.btnText}>Next</Text>
