@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Import your icon library
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import AttendanceConfirmation from './AttendanceConfirmation';
 
-function Attendance() {
-  const navigation = useNavigation();
+function Attendance({ navigation }) {
+  // const navigation = useNavigation();
 
   const handleScanQRCode = () => {
     // You can implement QR code scanning here and get the scanned data

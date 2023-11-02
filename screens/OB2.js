@@ -19,7 +19,7 @@ export default function OB2({ navigation }) {
       <Text style={styles.topic}>Complete timesheets!</Text>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate("OB3")}
+        onPress={() => navigation.replace("OB3")}
         style={styles.button}
       >
         <Text style={styles.btnText}>Next</Text>

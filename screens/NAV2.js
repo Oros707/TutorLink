@@ -5,9 +5,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import Attendance from "./Attendance/Attendance";
 import Schedule from "./Schedule";
-import Chat from "./Chat/Chat";
 import ClaimNavigator from "./ClaimProcess/ClaimNavigator";
 import LogoutNavigator from "../navigation/LogoutNavigator";
+import ChatNavigator from "./Chat/ChatNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -60,13 +60,14 @@ export default function NAV2() {
           }}
         />
         <Tab.Screen
-          name="Chat"
-          component={Chat}
+          name="ChatNavigator"
+          component={ChatNavigator}
           options={{
             tabBarLabel: "Chat",
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="chatbubbles-outline" size={size} color={color} />
             ),
+            headerShown: false,
           }}
         />
         <Tab.Screen

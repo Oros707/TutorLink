@@ -1,149 +1,170 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
+import { db } from '../config/firebase'; // Import db from your Firebase configuration
+import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 
 const Schedule = () => {
-  const [selectedYear, setSelectedYear] = useState('FirstYear');
-  const [selectedModuleCode, setSelectedModuleCode] = useState('');
+  const [academicYears, setAcademicYears] = useState([]);
+  const [academicYear, setAcademicYear] = useState('');
+  const [timetableData, setTimetableData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  
-  const timetable = [
-    // Your timetable data here
-  ];
+  useEffect(() => {
+    const fetchAcademicYears = async () => {
+      const academicYearCollectionRef = collection(db, 'timetable');
+      const academicYearQuery = query(academicYearCollectionRef);
+      const academicYearDocs = await getDocs(academicYearQuery);
+      const years = [];
+      academicYearDocs.forEach((doc) => {
+        years.push(doc.id);
+      });
+      setAcademicYears(years);
+      if (years.length > 0) {
+        setAcademicYear(years[0]);
+      }
+    };
 
-  // Define module codes for each year
-  const moduleCodesByYear = {
-    FirstYear: ['BAY01B1', 'DSW01B1', 'SSW01B1', 'IFS01B1'],
-    SecondYear: ['BAY02B1', 'DSW02B1', 'SSW02B1', 'IFS02B1'],
-    ThirdYear: ['BAY03B1', 'DSW03B1', 'SSW03B1', 'IFS03B1'],
-  };
+    fetchAcademicYears();
+  }, []);
 
-  // Update the module code options when the year selection changes
-  const handleYearChange = (year) => {
-    setSelectedYear(year);
-    setSelectedModuleCode('');
-  };
+  useEffect(() => {
+    if (academicYear) {
+      const fetchTimetableData = async () => {
+        try {
+          setLoading(true);
+          const dayOfWeeks = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+          const data = [];
+          dayOfWeeks.forEach(async (day) => {
+            const dayCollectionRef = collection(db, 'timetable', academicYear, day);
+            const dayDocs = await getDocs(dayCollectionRef);
+            dayDocs.forEach((doc) => {
+              const [startTime, endTime] = doc.id.split('-'); // Split the slot into start and end times
+              data.push({ day, startTime, endTime, module: doc.data().module });
+            });
+          });
+          setTimetableData(data);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error retrieving timetable data:', error);
+          setLoading(false);
+        }
+      };
+
+      fetchTimetableData();
+    }
+  }, [academicYear]);
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.title}> Tutoring Schedule</Text>
-      </View>
-      <View style={styles.dropdowns}>
-        <View style={styles.dropdownContainer}>
-          <Text style={styles.label}>Year of Study</Text>
-          <Picker
-            selectedValue={selectedYear}
-            onValueChange={(itemValue) => handleYearChange(itemValue)}
-            style={styles.dropdown}
-          >
-            <Picker.Item label="Select Year of Study" value="" />
-            <Picker.Item label="First Year" value="FirstYear" />
-            <Picker.Item label="Second Year" value="SecondYear" />
-            <Picker.Item label="Third Year" value="ThirdYear" />
-          </Picker>
+      <Text style={styles.title}>Select Academic Year:</Text>
+      <RNPickerSelect
+        onValueChange={(value) => setAcademicYear(value)}
+        items={academicYears.map((year) => ({ label: year, value: year }))}
+        value={academicYear}
+        style={pickerSelectStyles}
+      />
+
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <View style={styles.timetableContainer}>
+          <Text style={styles.timetableTitle}>
+            Timetable for {academicYear}
+          </Text>
+
+          <FlatList
+            data={timetableData}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.timetableCard}>
+                <Text style={styles.timetableSlot}>{item.day}</Text>
+                <Text style={styles.timetableModule}>{item.module}</Text>
+                <Text style={styles.timetableTime}>
+                  {item.startTime} - {item.endTime}
+                </Text>
+              </View>
+            )}
+          />
         </View>
-
-        <View style={styles.dropdownContainer}>
-          <Text style={styles.label}>Module Code</Text>
-          <Picker
-            selectedValue={selectedModuleCode}
-            onValueChange={(itemValue) => setSelectedModuleCode(itemValue)}
-            style={styles.dropdown}
-          >
-            <Picker.Item label="Select Module Code" value="" />
-            {selectedYear &&
-              moduleCodesByYear[selectedYear].map((code) => (
-                <Picker.Item key={code} label={code} value={code} />
-              ))}
-          </Picker>
-        </View>
-      </View>
-
-      {/* Add some spacing */}
-      <View style={{ marginBottom: 20 }}></View>
-
-      <View style={styles.headerRow}>
-        <Text style={styles.headerCell}>Time</Text>
-        <Text style={styles.headerCell}>Monday</Text>
-        <Text style={styles.headerCell}>Tuesday</Text>
-        <Text style={styles.headerCell}>Wednesday</Text>
-        <Text style={styles.headerCell}>Thursday</Text>
-        <Text style={styles.headerCell}>Friday</Text>
-      </View>
-
-      {timetable.map((rowData, index) => (
-        <View key={index} style={styles.dataRow}>
-          <Text style={styles.dataCell}>{rowData.time}</Text>
-          <Text style={styles.dataCell}>{rowData.Monday}</Text>
-          <Text style={styles.dataCell}>{rowData.Tuesday}</Text>
-          <Text style={styles.dataCell}>{rowData.Wednesday}</Text>
-          <Text style={styles.dataCell}>{rowData.Thursday}</Text>
-          <Text style={styles.dataCell}>{rowData.Friday}</Text>
-        </View>
-      ))}
+      )}
     </View>
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor:'orange',
-    
+    backgroundColor: '#FFA500', // Orange background color
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
   },
-  dropdowns: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 30,
-    marginTop:49,
-    
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: 'white', // Text color
   },
-  dropdownContainer: {
-    flex: 1,
+  timetableContainer: {
+    width: '100%',
+    paddingHorizontal: 20,
+    backgroundColor: 'white', // Background color of the timetable container
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 20,
   },
-  dropdown: {
-    flex: 1,
-  },
-  label: {
+  timetableTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 4,
+    marginBottom: 10,
   },
-  headerRow: {
-    flexDirection: 'row',
-    backgroundColor: '#f2f2f2',
-    padding: 8,
-    marginBottom: 8,
-    borderRadius: 8,
+  timetableCard: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 10,
+    elevation: 2, // Android shadow
+    shadowColor: 'black', // iOS shadow
+    shadowOffset: { width: 0, height: 2 }, // iOS shadow
+    shadowOpacity: 0.2, // iOS shadow
   },
-  dataRow: {
-    flexDirection: 'row',
-    padding: 8,
-    marginBottom: 8,
-    borderRadius: 8,
-  },
-  headerCell: {
-    flex: 1,
+  timetableSlot: {
+    fontSize: 16,
     fontWeight: 'bold',
-    textAlign: 'center',
-    borderWidth: 1,
-    borderColor: 'black',
   },
-  dataCell: {
-    flex: 1,
-    textAlign: 'center',
-    borderWidth: 1,
-    borderColor: 'black',
+  timetableModule: {
+    fontSize: 14,
+    color: 'gray',
   },
-  title:{
-    marginTop:30,
-    textAlign:'center',
-    fontSize:30,
-    color:'black',
+  timetableTime: {
+    fontSize: 14,
+    color: 'blue',
+  },
+});
 
-  }
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 4,
+    color: 'black',
+    paddingRight: 30,
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 0.5,
+    borderColor: 'purple',
+    borderRadius: 8,
+    color: 'black',
+    paddingRight: 30,
+  },
 });
 
 export default Schedule;
