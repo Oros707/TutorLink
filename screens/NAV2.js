@@ -79,8 +79,8 @@ export default function NAV2() {
           }}
         />
         <Tab.Screen
-          name="ProfilePage"
-          component={ProfilePage}
+          name="SettingsNavigation"
+          component={SettingsNavigation}
           options={{
             tabBarLabel: "Profile",
             tabBarIcon: ({ color, size }) => (
