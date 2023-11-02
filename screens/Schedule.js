@@ -124,7 +124,7 @@ const Schedule = () => {
       </View>
 
       {timetable.map((rowData, index) => (
-        <View key={index} style={styles.dataRow}>
+        <View key={index} style={{}}>
           <Text style={[styles.dataCell, { color: darkMode ? 'white' : 'orange' }]}>{rowData.time}</Text>
           <Text style={[styles.dataCell, { color: darkMode ? 'white' : 'black' }]}>{rowData.Monday}</Text>
           <Text style={[styles.dataCell, { color: darkMode ? 'white' : 'black' }]}>{rowData.Tuesday}</Text>
