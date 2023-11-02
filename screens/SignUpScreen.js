@@ -8,14 +8,18 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { useNavigation } from "@react-navigation/native";
-import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from "firebase/auth";
-import { auth } from "../config/firebase";
-import { useTheme } from './Settings/ThemeContext'; // Import the useTheme hook
+import {
+  createUserWithEmailAndPassword,
+  fetchSignInMethodsForEmail,
+} from "firebase/auth";
+import { auth, db } from "../config/firebase";
 import { themeColors } from "../theme";
+import { addDoc, collection, doc, setDoc } from "@firebase/firestore";
+import { updateProfile } from "firebase/auth";
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
@@ -23,9 +27,11 @@ export default function SignUpScreen() {
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState(""); // Add phoneNumber state
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [passwordVisible, setPasswordVisible] = useState(true); // State for password visibility
+  const [loading, setLoading] = useState(false);
 
   const errorMessages = {
     "auth/email-already-in-use":
@@ -36,13 +42,15 @@ export default function SignUpScreen() {
   };
 
   const validateEmail = (email) => {
-    // Simple email validation using a regular expression
     return /\S+@\S+\.\S+/.test(email);
   };
 
   const validatePhoneNumber = (phoneNumber) => {
-    // Simple phone number validation to ensure it contains exactly 10 digits
     return /^\d{10}$/.test(phoneNumber);
+  };
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
   };
 
   const handleSubmit = async () => {
@@ -61,15 +69,54 @@ export default function SignUpScreen() {
       return;
     }
 
+    if (email.toLowerCase() === "nomsaadmin@gmail.com") {
+      setError("Sign-up with this email is restricted.");
+      return;
+    }
+
     try {
-      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-      if (signInMethods.length > 0) {
-        setError(errorMessages["auth/email-already-in-use"]);
-      } else {
-        // Email is available, create a new account
-        await createUserWithEmailAndPassword(auth, email, password);
-        navigation.navigate("LoginScreen");
-      }
+      setLoading(true);
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+
+          // Update the user's profile information
+          return updateProfile(user, {
+            displayName: fullName,
+            photoURL:
+              "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg",
+          })
+            .then(() => {
+              // Saving user data in Firestore
+              return setDoc(doc(db, "users", user.uid), {
+                email: email,
+                fullName: fullName,
+                phoneNumber: phoneNumber,
+              });
+            })
+            .then(() => {
+              // Navigate after successfully adding to Firestore
+              navigation.navigate("LoginScreen");
+              setEmail("");
+              setFullName("");
+              setPassword("");
+              setPhoneNumber("");
+              setLoading(false);
+            })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              console.log(errorMessage);
+              console.log(errorCode);
+              setLoading(false);
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorMessage);
+          console.log(errorCode);
+        });
     } catch (err) {
       console.log("Error: ", err.message);
       setError(errorMessages[err.code] || err.message);
@@ -164,21 +211,39 @@ export default function SignUpScreen() {
                 keyboardType="numeric"
                 placeholderTextColor={darkMode ? 'white' : 'black'}
               />
-              <Text style={{ color: "gray", marginBottom: 4 }}>Password</Text>
-              <TextInput
-                style={{
-                  padding: 12,
-                  backgroundColor: darkMode ? '#181818' : "#F5F5F5",
-                  color: darkMode ? 'white' : "black",
-                  borderRadius: 10,
-                  marginBottom: 16,
-                }}
-                secureTextEntry
-                value={password}
-                onChangeText={(value) => setPassword(value)}
-                placeholder="Enter Password"
-                placeholderTextColor={darkMode ? 'white' : 'black'}
-              />
+               <View>
+                <Text style={{ color: "gray", marginBottom: 4 }}>Password</Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    paddingHorizontal: 10,
+                    backgroundColor: "#F5F5F5",
+                    color: "black",
+                    borderRadius: 10,
+                    marginBottom: 16,
+                  }}
+                >
+                  <TextInput
+                    style={{
+                      flex: 1,
+                    }}
+                    secureTextEntry={passwordVisible}
+                    value={password}
+                    onChangeText={(value) => setPassword(value)}
+                    placeholder="Enter Password"
+                  />
+                  <TouchableOpacity onPress={togglePasswordVisibility}>
+                    <Feather
+                      name={passwordVisible ? "eye" : "eye-off"}
+                      size={20}
+                      color="gray"
+                      style={{ padding: 10 }}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+
               <TouchableOpacity
                 style={{
                   padding: 14,

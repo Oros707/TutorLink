@@ -26,6 +26,7 @@ export default function LoginScreen() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+
   const errorMessages = {
     "auth/user-not-found": "User not found. Please check your email.",
     "auth/invalid-email": "Invalid email. Please check your email address.",
@@ -40,7 +41,20 @@ export default function LoginScreen() {
         setLoading(true);
         setError(null);
         await signInWithEmailAndPassword(auth, email, password);
-        navigation.navigate("NAV2");
+        
+
+        const user = auth.currentUser;
+        if (user) {
+          setUserDisplayName(user.displayName || "Unknown User");
+
+          navigation.navigate("Claims", { userDisplayName });
+        }
+        // Check if the email is "NomsaAdmin@gmail.com" and redirect to the AdminPage
+        if (email.toLowerCase() === "nomsaadmin@gmail.com") {
+          navigation.navigate("AdminNavigator");
+        } else {
+          navigation.replace("NAV2");
+        }
       } catch (err) {
         console.log("got error: ", err.message);
         setError(errorMessages[err.code] || err.message);

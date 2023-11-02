@@ -38,7 +38,7 @@ export default function SplashScreen() {
       <Text style={styles.topic}>Get Started</Text>
     </TouchableOpacity>
   </View>
-);
+  );
 }
 
 const styles = StyleSheet.create({

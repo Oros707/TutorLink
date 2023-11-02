@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { auth, sendPasswordResetEmail } from "../config/firebase"; // Import the 'auth' object
+import { auth } from "../config/firebase";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -15,14 +16,17 @@ export default function ForgotPassword() {
 
   const handleResetPassword = async () => {
     try {
+      // Attempt to send the password reset email
       await sendPasswordResetEmail(auth, email);
       setIsEmailSent(true);
       setError(null);
     } catch (error) {
-      setError(
-        "Failed to send the password reset email. Please check your email address."
-      );
-      console.log(error.message);
+      if (error.code === "auth/user-not-found") {
+        setError("User with this email address does not exist.");
+      } else {
+        setError("Failed to send the password reset email. Please check your email address.");
+        console.log(error.message);
+      }
       setIsEmailSent(false);
     }
   };

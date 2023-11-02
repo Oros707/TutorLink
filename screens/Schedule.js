@@ -1,13 +1,61 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import { useTheme } from './Settings/ThemeContext'; // Import the useTheme hook
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList ,StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/-select';
+import { db } from '../config/firebase'; // Import db from your Firebase configuration
+import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 
 const Schedule = () => {
   const { darkMode } = useTheme(); // Use the useTheme hook to get the theme information
-  const [selectedYear, setSelectedYear] = useState('FirstYear');
-  const [selectedModuleCode, setSelectedModuleCode] = useState('');
 
+  const [academicYears, setAcademicYears] = useState([]);
+  const [academicYear, setAcademicYear] = useState('');
+  const [timetableData, setTimetableData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchAcademicYears = async () => {
+      const academicYearCollectionRef = collection(db, 'timetable');
+      const academicYearQuery = query(academicYearCollectionRef);
+      const academicYearDocs = await getDocs(academicYearQuery);
+      const years = [];
+      academicYearDocs.forEach((doc) => {
+        years.push(doc.id);
+      });
+      setAcademicYears(years);
+      if (years.length > 0) {
+        setAcademicYear(years[0]);
+      }
+    };
+
+    fetchAcademicYears();
+  }, []);
+
+  useEffect(() => {
+    if (academicYear) {
+      const fetchTimetableData = async () => {
+        try {
+          setLoading(true);
+          const dayOfWeeks = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+          const data = [];
+          dayOfWeeks.forEach(async (day) => {
+            const dayCollectionRef = collection(db, 'timetable', academicYear, day);
+            const dayDocs = await getDocs(dayCollectionRef);
+            dayDocs.forEach((doc) => {
+              const [startTime, endTime] = doc.id.split('-'); // Split the slot into start and end times
+              data.push({ day, startTime, endTime, module: doc.data().module });
+            });
+          });
+          setTimetableData(data);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error retrieving timetable data:', error);
+          setLoading(false);
+        }
+      };
+
+      fetchTimetableData();
+    }
+  }, [academicYear]);
   const timetable = [
     // Your timetable data here
   ];
@@ -25,14 +73,16 @@ const Schedule = () => {
     setSelectedModuleCode('');
   };
 
+
+
   return (
-    <View style={[styles.container, { backgroundColor: darkMode ? 'black' : (darkMode ? 'orange' : '#D9E3F0') }]}>
+    <View style={[styles.container , { backgroundColor: darkMode ? 'black' : (darkMode ? 'orange' : '#D9E3F0') }]}>
       <View>
         <Text style={styles.title}> Tutoring Schedule</Text>
       </View>
       <View style={styles.dropdowns}>
         <View style={styles.dropdownContainer}>
-          <Text style={[styles.label, { color: darkMode ? 'white' : 'black' }]}>Year of Study</Text>
+          <Text style={styles.label}>Year of Study</Text>
           <Picker
             selectedValue={selectedYear}
             onValueChange={(itemValue) => handleYearChange(itemValue)}
@@ -46,7 +96,7 @@ const Schedule = () => {
         </View>
 
         <View style={styles.dropdownContainer}>
-          <Text style={[styles.label, { color: darkMode ? 'white' : 'black' }]}>Module Code</Text>
+          <Text style={styles.label}>Module Code</Text>
           <Picker
             selectedValue={selectedModuleCode}
             onValueChange={(itemValue) => setSelectedModuleCode(itemValue)}
@@ -87,59 +137,78 @@ const Schedule = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-  },
-  dropdowns: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 30,
-    marginTop: 49,
-  },
-  dropdownContainer: {
-    flex: 1,
-  },
-  dropdown: {
-    flex: 1,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 4,
-    color:'orange',
-  },
-  headerRow: {
-    flexDirection: 'row',
-    backgroundColor: '#f2f2f2',
-    padding: 8,
-    marginBottom: 8,
-    borderRadius: 8,
-  },
-  dataRow: {
-    flexDirection: 'row',
-    padding: 8,
-    marginBottom: 8,
-    borderRadius: 8,
-  },
-  headerCell: {
-    flex: 1,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    borderWidth: 1,
-    borderColor: 'orange',
-  },
-  dataCell: {
-    flex: 1,
-    textAlign: 'center',
-    borderWidth: 1,
-    borderColor: 'orange',
+    backgroundColor: '#FFA500', // Orange background color
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
   },
   title: {
-    marginTop: 30,
-    textAlign: 'center',
-    fontSize: 30,
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: 'white', // Text color
+  },
+  timetableContainer: {
+    width: '100%',
+    paddingHorizontal: 20,
+    backgroundColor: 'white', // Background color of the timetable container
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 20,
+  },
+  timetableTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  timetableCard: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 10,
+    elevation: 2, // Android shadow
+    shadowColor: 'black', // iOS shadow
+    shadowOffset: { width: 0, height: 2 }, // iOS shadow
+    shadowOpacity: 0.2, // iOS shadow
+  },
+  timetableSlot: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  timetableModule: {
+    fontSize: 14,
+    color: 'gray',
+  },
+  timetableTime: {
+    fontSize: 14,
+    color: 'blue',
+  },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 4,
+    color: 'black',
+    paddingRight: 30,
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 0.5,
+    borderColor: 'purple',
+    borderRadius: 8,
+    color: 'black',
+    paddingRight: 30,
   },
 });
 

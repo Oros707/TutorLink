@@ -28,7 +28,7 @@ export default function OB3({ navigation }) {
       <Text style={darkMode ? styles.darkTopic : styles.topic}>Scheduled Classes</Text>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate("LoginScreen")}
+        onPress={() => navigation.replace("LoginScreen")}
         style={styles.button}
       >
         <Text style={styles.btnText}>Next</Text>

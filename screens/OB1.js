@@ -34,7 +34,7 @@ export default function OB1({ navigation }) {
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate("OB2")}
+        onPress={() => navigation.replace("OB2")}
         style={styles.button}
       >
         <Text style={styles.btnText}>Next</Text>

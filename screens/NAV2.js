@@ -6,9 +6,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { useTheme } from './Settings/ThemeContext'; // Import the useTheme hook
 import Attendance from "./Attendance/Attendance";
 import Schedule from "./Schedule";
-import Chat from "./Chat/Chat";
 import ClaimNavigator from "./ClaimProcess/ClaimNavigator";
-import UserPage from "./UserPage";
+
 import Settings from "./Settings/Settings";
 import SettingsNavigation from './SettingsNavigation';
 
@@ -67,8 +66,8 @@ export default function NAV2() {
           }}
         />
         <Tab.Screen
-          name="Chat"
-          component={Chat}
+          name="ChatNavigator"
+          component={ChatNavigator}
           options={{
             tabBarLabel: "Chat",
             tabBarIcon: ({ color, size }) => (
@@ -78,8 +77,8 @@ export default function NAV2() {
           }}
         />
         <Tab.Screen
-          name="SettingsNavigation"
-          component={SettingsNavigation}
+          name="LogoutNavigator"
+          component={LogoutNavigator}
           options={{
             tabBarLabel: "Profile",
             tabBarIcon: ({ color, size }) => (
