@@ -1,7 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { signOut } from 'firebase/auth'; // Import the signOut function from your authentication library
+import { auth } from '../config/firebase';
 
 const AdminPage = () => {
+  const handleLogout = async () => {
+    try {
+      console.log("signout");
+      await signOut(auth); // Sign out the current user
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -11,6 +22,7 @@ const AdminPage = () => {
         />
         <Text style={styles.title}>Welcome to the Admin Dashboard</Text>
         <Text style={styles.title}>Mr Axole Maranjana</Text>
+        <Button title="Logout" onPress={handleLogout} />
       </View>
     </View>
   );
