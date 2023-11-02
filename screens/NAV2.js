@@ -1,5 +1,4 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -19,7 +18,6 @@ export default function NAV2() {
   const { darkMode } = useTheme();
 
   return (
-    <NavigationContainer independent={true}>
       <Tab.Navigator
         initialRouteName="NAV2"
         independent={true}
@@ -90,6 +88,5 @@ export default function NAV2() {
           }}
         />
       </Tab.Navigator>
-    </NavigationContainer>
   );
 }
