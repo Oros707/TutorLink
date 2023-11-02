@@ -45,12 +45,16 @@ export default function NAV1() {
   const { user } = useAuth();
 
   return (
-    <NavigationContainer
-      theme={darkMode ? DarkTheme : DefaultTheme}
-    >
-      {
-        user ? <NAV2/> : <StackNavigator />
-      }
+    <NavigationContainer theme={darkMode ? DarkTheme : DefaultTheme}>
+      {user ? (
+        user.email === "nomsaadmin@gmail.com" ? (
+          <AdminNavigator />
+        ) : (
+          <NAV2 />
+        )
+      ) : (
+        <StackNavigator />
+      )}
     </NavigationContainer>
   );
 }
