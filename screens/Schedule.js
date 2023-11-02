@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import Spinner from 'react-native-loading-spinner-overlay';
-import { db } from '../config/firebase';
+import { db } from '../config/firebase'; // Import db from your Firebase configuration
 import { collection, query, getDocs } from 'firebase/firestore';
 
 const Schedule = () => {
@@ -14,7 +13,14 @@ const Schedule = () => {
   useEffect(() => {
     const fetchAcademicYears = async () => {
       try {
-        // ... (same as before)
+        const academicYearCollectionRef = collection(db, 'timetable');
+        const academicYearQuery = query(academicYearCollectionRef);
+        const academicYearDocs = await getDocs(academicYearQuery);
+        const years = academicYearDocs.docs.map((doc) => doc.id);
+        setAcademicYears(years);
+        if (years.length > 0) {
+          setAcademicYear(years[0]);
+        }
       } catch (error) {
         console.error('Error retrieving academic years:', error);
       }
@@ -28,7 +34,19 @@ const Schedule = () => {
       const fetchTimetableData = async () => {
         try {
           setLoading(true);
-          // ... (same as before)
+          const dayOfWeeks = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+          const data = [];
+
+          for (const day of dayOfWeeks) {
+            const dayCollectionRef = collection(db, 'timetable', academicYear, day);
+            const dayDocs = await getDocs(dayCollectionRef);
+            dayDocs.forEach((doc) => {
+              const [startTime, endTime] = doc.id.split('-'); // Split the slot into start and end times
+              data.push({ day, startTime, endTime, module: doc.data().module });
+            });
+          }
+
+          setTimetableData(data);
           setLoading(false);
         } catch (error) {
           console.error('Error retrieving timetable data:', error);
@@ -50,16 +68,9 @@ const Schedule = () => {
         style={pickerSelectStyles}
       />
 
-      <Spinner
-        visible={loading}
-        textContent={'Loading...'}
-        textStyle={styles.spinnerText}
-        color={'#FFA500'} // Customize the spinner color to match your theme
-        overlayColor={'rgba(0, 0, 0, 0.6)'} // Customize the overlay color for the loading spinner
-        animation={'fade'}
-      />
-
-      {!loading && (
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : (
         <View style={styles.timetableContainer}>
           <Text style={styles.timetableTitle}>Timetable for {academicYear}</Text>
 
@@ -92,14 +103,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    marginTop: 100, // Adjust the marginTop property to move it down
     color: 'white',
   },
   timetableContainer: {
     flex: 1,
     marginTop: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 15,
   },
   timetableTitle: {
     fontSize: 16,
@@ -127,9 +136,6 @@ const styles = StyleSheet.create({
   timetableTime: {
     fontSize: 14,
     color: 'blue',
-  },
-  spinnerText: {
-    color: 'white',
   },
 });
 
