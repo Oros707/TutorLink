@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import {useContext } from 'react'
+import DetailsContext from './DetailsContext';
 
 export default function ClaimDetails() {
   const navigation = useNavigation();
@@ -11,8 +13,22 @@ export default function ClaimDetails() {
   const [amount, setAmount] = useState('');
   const [costCentreNumber, setCostCentreNumber] = useState('');
   const [total, setTotal] = useState('');
+  const [details, setDetails] = useContext(DetailsContext);
 
   const handleNext = () => {
+    setDetails(prev => ({
+      ...prev,
+      ClaimDetails: { 
+        contactETNo,
+        totalUnits,
+        rate,
+        currency,
+        amount,
+        costCentreNumber,
+        total,
+        details
+       },
+    }));
     // Navigate to BankingDetails
     navigation.navigate('BankingDetails');
   };
@@ -89,7 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: "#333",
-    // paddingBottom: 16,
+    
   },
   label: {
     color: "orange", // Orange text color

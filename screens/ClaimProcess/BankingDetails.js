@@ -7,6 +7,8 @@ import {
   StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import {useContext } from 'react'
+import DetailsContext from './DetailsContext';
 
 export default function BankingDetails() {
   const navigation = useNavigation();
@@ -15,8 +17,19 @@ export default function BankingDetails() {
   const [bankName, setBankName] = useState("");
   const [accountNo, setAccountNo] = useState("");
   const [accountType, setAccountType] = useState("");
+  const [details, setDetails] = useContext(DetailsContext);
 
   const handleNext = () => {
+    setDetails(prev => ({
+      ...prev,
+      BankingDetails: {
+        status,
+        bankName,
+        accountName,
+        accountType,
+        accountNo
+       },
+    }));
     navigation.navigate("TemporaryAppointment");
   };
 

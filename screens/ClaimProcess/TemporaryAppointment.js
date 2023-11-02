@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import {useContext } from 'react'
+import DetailsContext from './DetailsContext';
 
 export default function TemporaryAppointment() {
   const navigation = useNavigation();
@@ -9,8 +11,18 @@ export default function TemporaryAppointment() {
   const [remuneration, setRemuneration] = useState('');
   const [cost, setCost] = useState('');
   const [totalBudget, setTotalBudget] = useState('');
+  const [details, setDetails] = useContext(DetailsContext);
 
   const handleNext = () => {
+    setDetails(prev => ({
+      ...prev,
+      TemporaryAppointment: {
+        duration,
+        cost,
+        hour,
+        totalBudget
+       },
+    }));
     // Navigate to Confirmation
     navigation.navigate('Confirmation');
   };

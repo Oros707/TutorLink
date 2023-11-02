@@ -7,12 +7,16 @@ import ClaimDetails from "./ClaimDetails";
 import Confirmation from "./Confirmation";
 import TemporaryAppointment from "./TemporaryAppointment";
 import ConfirmationResult from "./ConfirmationResult";
+import DetailsProvider from "./DetailsProvider";
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   return (
     <>
+    <DetailsProvider>
+
+    
       <Stack.Navigator initialRouteName="Claims">
         <Stack.Screen
           name="Claims"
@@ -58,6 +62,7 @@ const AppNavigator = () => {
         />
        
       </Stack.Navigator>
+      </DetailsProvider>
     </>
   );
 };
