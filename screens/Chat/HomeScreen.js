@@ -13,6 +13,7 @@ import { getAuth } from "firebase/auth";
 import { db } from "../../config/firebase";
 import { collection, onSnapshot } from "firebase/firestore";
 import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const HomeScreen = ({ navigation }) => {
   const [chats, setChats] = useState([]);
@@ -59,7 +60,7 @@ const HomeScreen = ({ navigation }) => {
       headerStyle: { backgroundColor: "orange" },
       headerTitleStyle: { color: "black" },
       headerLeft: () => (
-        <View style={{ marginRight: 20 }}>
+        <View style={{ marginVertical: 20 }}>
           <TouchableOpacity onPress={handleSignOut} activeOpacity={0.5}>
             <Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} />
           </TouchableOpacity>
@@ -74,14 +75,12 @@ const HomeScreen = ({ navigation }) => {
             marginRight: 20,
           }}
         >
-          <TouchableOpacity activeOpacity={0.5}>
-            <AntDesign name="camerao" size={24} color="black" />
-          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.5}></TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => navigation.navigate("AddChat")}
           >
-            <SimpleLineIcons name="pencil" size={24} color="black" />
+            <MaterialIcons name="group-add" size={24} color="black" />
           </TouchableOpacity>
         </View>
       ),
@@ -94,14 +93,22 @@ const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView>
       <ScrollView>
-        {chats.map(({ id, data: { chatName } }) => (
-          <CustomListItem
-            key={id}
-            id={id}
-            chatName={chatName}
-            enterChat={enterChat}
-          />
-        ))}
+        {chats.length > 0 ? (
+          chats.map(({ id, data: { chatName } }) => (
+            <CustomListItem
+              key={id}
+              id={id}
+              chatName={chatName}
+              enterChat={enterChat}
+            />
+          ))
+        ) : (
+          <View style={{ alignItems: "center", marginTop: 20 }}>
+            <Text style={{ fontSize: 16, color: "gray" }}>
+              Click the group-add icon to start a new group
+            </Text>
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

@@ -38,8 +38,14 @@ export default function LoginScreen() {
         setLoading(true);
         setError(null);
         await signInWithEmailAndPassword(auth, email, password);
-
         
+
+        const user = auth.currentUser;
+        if (user) {
+          setUserDisplayName(user.displayName || "Unknown User");
+
+          navigation.navigate("Claims", { userDisplayName });
+        }
         // Check if the email is "NomsaAdmin@gmail.com" and redirect to the AdminPage
         if (email.toLowerCase() === "nomsaadmin@gmail.com") {
           navigation.navigate("AdminNavigator");

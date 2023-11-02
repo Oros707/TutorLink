@@ -1,7 +1,6 @@
 import { Text, Input, Button } from "react-native-elements";
 import React, { useLayoutEffect, useState } from "react";
 import { StyleSheet, View, ActivityIndicator } from "react-native";
-
 import { AntDesign } from "@expo/vector-icons";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
@@ -29,7 +28,7 @@ const AddChatScreen = ({ navigation }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: "Add A new Chat",
+      title: "Add New Group Chat",
       headerStyle: { backgroundColor: "orange" },
       headerTitleStyle: { color: "black" },
     });
@@ -43,7 +42,11 @@ const AddChatScreen = ({ navigation }) => {
         onChangeText={(text) => setInput(text)}
         leftIcon={<AntDesign name="wechat" size={24} color="black" />}
       />
-      <Button disabled={!input} title="create new chat" onPress={handleCreateChat} />
+      <Button
+        disabled={!input}
+        title="create new chat"
+        onPress={handleCreateChat}
+      />
       {isLoading && (
         <View style={styles.overlay}>
           <ActivityIndicator size="large" color="orange" />

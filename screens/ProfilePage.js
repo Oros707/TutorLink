@@ -36,10 +36,7 @@ const ProfilePage = ({ navigation }) => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'LoginScreen' }],
-      });
+      navigation.replace('NAV1'); // Redirect to the login page
     } catch (error) {
       console.error('Error signing out:', error);
     }
