@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { useTheme } from './Settings/ThemeContext'; // Import the useTheme hook
 
 const Schedule = () => {
+  const { darkMode } = useTheme(); // Use the useTheme hook to get the theme information
   const [selectedYear, setSelectedYear] = useState('FirstYear');
   const [selectedModuleCode, setSelectedModuleCode] = useState('');
 
-  
   const timetable = [
     // Your timetable data here
   ];
@@ -25,13 +26,13 @@ const Schedule = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: darkMode ? 'black' : (darkMode ? 'orange' : '#D9E3F0') }]}>
       <View>
         <Text style={styles.title}> Tutoring Schedule</Text>
       </View>
       <View style={styles.dropdowns}>
         <View style={styles.dropdownContainer}>
-          <Text style={styles.label}>Year of Study</Text>
+          <Text style={[styles.label, { color: darkMode ? 'white' : 'black' }]}>Year of Study</Text>
           <Picker
             selectedValue={selectedYear}
             onValueChange={(itemValue) => handleYearChange(itemValue)}
@@ -45,7 +46,7 @@ const Schedule = () => {
         </View>
 
         <View style={styles.dropdownContainer}>
-          <Text style={styles.label}>Module Code</Text>
+          <Text style={[styles.label, { color: darkMode ? 'white' : 'black' }]}>Module Code</Text>
           <Picker
             selectedValue={selectedModuleCode}
             onValueChange={(itemValue) => setSelectedModuleCode(itemValue)}
@@ -64,22 +65,22 @@ const Schedule = () => {
       <View style={{ marginBottom: 20 }}></View>
 
       <View style={styles.headerRow}>
-        <Text style={styles.headerCell}>Time</Text>
-        <Text style={styles.headerCell}>Monday</Text>
-        <Text style={styles.headerCell}>Tuesday</Text>
-        <Text style={styles.headerCell}>Wednesday</Text>
-        <Text style={styles.headerCell}>Thursday</Text>
-        <Text style={styles.headerCell}>Friday</Text>
+        <Text style={[styles.headerCell, { color: darkMode ? 'white' : 'black' }]}>Time</Text>
+        <Text style={[styles.headerCell, { color: darkMode ? 'white' : 'black' }]}>Monday</Text>
+        <Text style={[styles.headerCell, { color: darkMode ? 'white' : 'black' }]}>Tuesday</Text>
+        <Text style={[styles.headerCell, { color: darkMode ? 'white' : 'black' }]}>Wednesday</Text>
+        <Text style={[styles.headerCell, { color: darkMode ? 'white' : 'black' }]}>Thursday</Text>
+        <Text style={[styles.headerCell, { color: darkMode ? 'white' : 'black' }]}>Friday</Text>
       </View>
 
       {timetable.map((rowData, index) => (
         <View key={index} style={styles.dataRow}>
-          <Text style={styles.dataCell}>{rowData.time}</Text>
-          <Text style={styles.dataCell}>{rowData.Monday}</Text>
-          <Text style={styles.dataCell}>{rowData.Tuesday}</Text>
-          <Text style={styles.dataCell}>{rowData.Wednesday}</Text>
-          <Text style={styles.dataCell}>{rowData.Thursday}</Text>
-          <Text style={styles.dataCell}>{rowData.Friday}</Text>
+          <Text style={[styles.dataCell, { color: darkMode ? 'white' : 'orange' }]}>{rowData.time}</Text>
+          <Text style={[styles.dataCell, { color: darkMode ? 'white' : 'black' }]}>{rowData.Monday}</Text>
+          <Text style={[styles.dataCell, { color: darkMode ? 'white' : 'black' }]}>{rowData.Tuesday}</Text>
+          <Text style={[styles.dataCell, { color: darkMode ? 'white' : 'black' }]}>{rowData.Wednesday}</Text>
+          <Text style={[styles.dataCell, { color: darkMode ? 'white' : 'black' }]}>{rowData.Thursday}</Text>
+          <Text style={[styles.dataCell, { color: darkMode ? 'white' : 'black' }]}>{rowData.Friday}</Text>
         </View>
       ))}
     </View>
@@ -90,15 +91,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor:'orange',
-    
   },
   dropdowns: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 30,
-    marginTop:49,
-    
+    marginTop: 49,
   },
   dropdownContainer: {
     flex: 1,
@@ -110,6 +108,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 4,
+    color:'orange',
   },
   headerRow: {
     flexDirection: 'row',
@@ -129,21 +128,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: 'orange',
   },
   dataCell: {
     flex: 1,
     textAlign: 'center',
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: 'orange',
   },
-  title:{
-    marginTop:30,
-    textAlign:'center',
-    fontSize:30,
-    color:'black',
-
-  }
+  title: {
+    marginTop: 30,
+    textAlign: 'center',
+    fontSize: 30,
+  },
 });
 
 export default Schedule;

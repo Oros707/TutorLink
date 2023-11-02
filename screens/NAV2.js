@@ -3,15 +3,20 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { useTheme } from './Settings/ThemeContext'; // Import the useTheme hook
 import Attendance from "./Attendance/Attendance";
 import Schedule from "./Schedule";
 import Chat from "./Chat/Chat";
 import ClaimNavigator from "./ClaimProcess/ClaimNavigator";
 import UserPage from "./UserPage";
+import Settings from "./Settings/Settings";
+import SettingsNavigation from './SettingsNavigation';
 
 const Tab = createBottomTabNavigator();
 
 export default function NAV2() {
+  const { darkMode } = useTheme();
+
   return (
     <NavigationContainer independent={true}>
       <Tab.Navigator
@@ -19,9 +24,9 @@ export default function NAV2() {
         independent={true}
         screenOptions={{
           tabBarActiveTintColor: "orange",
-          tabBarInactiveTintColor: "white",
+          tabBarInactiveTintColor: darkMode ? "white" : "black",
           tabBarLabelStyle: { fontSize: 16, fontWeight: "bold" },
-          tabBarStyle: { backgroundColor: "black" },
+          tabBarStyle: { backgroundColor: darkMode ? 'black' : '#D9E3F0' },
         }}
       >
         <Tab.Screen
@@ -47,6 +52,7 @@ export default function NAV2() {
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="calendar-outline" size={size} color={color} />
             ),
+            headerShown: false,
           }}
         />
         <Tab.Screen
@@ -57,6 +63,7 @@ export default function NAV2() {
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="time-outline" size={size} color={color} />
             ),
+            headerShown: false,
           }}
         />
         <Tab.Screen
@@ -67,16 +74,18 @@ export default function NAV2() {
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="chatbubbles-outline" size={size} color={color} />
             ),
+            headerShown: false,
           }}
         />
         <Tab.Screen
-          name="UserPage"
-          component={UserPage}
+          name="SettingsNavigation"
+          component={SettingsNavigation}
           options={{
             tabBarLabel: "Profile",
             tabBarIcon: ({ color, size }) => (
               <AntDesign name="user" size={size} color={color} />
             ),
+            headerShown: false,
           }}
         />
       </Tab.Navigator>

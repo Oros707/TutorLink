@@ -1,29 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 import {
   GiftedChat,
   Bubble,
   MessageText,
   InputToolbar,
-} from "react-native-gifted-chat";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+} from 'react-native-gifted-chat';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTheme } from '../Settings/ThemeContext'; // Import the useTheme hook
 
 export default function Chat() {
+  const { darkMode } = useTheme(); // Use the useTheme hook to get the theme information
   const [messages, setMessages] = useState([]);
   const userId = 1; // Replace with the actual user ID
-  const userName = "User1"; // Replace with the actual user's name
+  const userName = 'User1'; // Replace with the actual user's name
 
   useEffect(() => {
     // Load chat messages from storage when the component mounts
     const loadChatMessages = async () => {
       try {
-        const storedMessages = await AsyncStorage.getItem("chat_messages");
+        const storedMessages = await AsyncStorage.getItem('chat_messages');
         if (storedMessages) {
           const parsedMessages = JSON.parse(storedMessages);
           setMessages(parsedMessages);
         }
       } catch (error) {
-        console.error("Error loading chat messages:", error);
+        console.error('Error loading chat messages:', error);
       }
     };
 
@@ -50,20 +52,17 @@ export default function Chat() {
 
   const saveChatMessage = async (message) => {
     try {
-      const storedMessages = await AsyncStorage.getItem("chat_messages");
+      const storedMessages = await AsyncStorage.getItem('chat_messages');
       const parsedMessages = storedMessages ? JSON.parse(storedMessages) : [];
       parsedMessages.push(message);
-      await AsyncStorage.setItem(
-        "chat_messages",
-        JSON.stringify(parsedMessages)
-      );
+      await AsyncStorage.setItem('chat_messages', JSON.stringify(parsedMessages));
     } catch (error) {
-      console.error("Error saving chat message:", error);
+      console.error('Error saving chat message:', error);
     }
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: darkMode ? 'black' : '#FFFFF0' }]}>
       <GiftedChat
         messages={messages}
         onSend={(newMessages) => onSend(newMessages)}
@@ -75,10 +74,10 @@ export default function Chat() {
             {...props}
             wrapperStyle={{
               left: {
-                backgroundColor: "white",
+                backgroundColor: darkMode ? 'white' : 'orange',
               },
               right: {
-                backgroundColor: "orange",
+                backgroundColor: darkMode ? 'white' : 'orange',
               },
             }}
           />
@@ -88,10 +87,10 @@ export default function Chat() {
             {...props}
             textStyle={{
               left: {
-                color: "black",
+                color: darkMode ? 'black' : 'white',
               },
               right: {
-                color: "white",
+                color: darkMode ? 'black' : 'white',
               },
             }}
           />
@@ -100,9 +99,10 @@ export default function Chat() {
           <InputToolbar
             {...props}
             containerStyle={{
-              backgroundColor: "transparent", // Set the background color to transparent
-              borderTopWidth: 0, // Remove the top border
+              backgroundColor: 'transparent',
+              borderTopWidth: 0,
             }}
+            textInputStyle={{ color: darkMode ? 'white' : 'black' }}
           />
         )}
         keyboardShouldPersistTaps="never"
@@ -115,6 +115,6 @@ export default function Chat() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFF0",
+    backgroundColor: '#FFFFF0',
   },
 });

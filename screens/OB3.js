@@ -1,13 +1,22 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Bubbles from "../components/bubbles";
+import { useNavigation } from "@react-navigation/native";
+import { useTheme } from './Settings/ThemeContext';
 
 export default function OB3({ navigation }) {
+  const { darkMode } = useTheme();
+
   return (
-    <View style={styles.container}>
-      <Bubbles />
+    <View style={darkMode ? styles.darkContainer : styles.container}>
+      <Bubbles darkMode={darkMode} />
+      <Image
+        style={styles.logo}
+        source={require("../images/UJ_LOGO_BW.png")}
+        alt="UJ Logo"
+      />
 
       <Text style={styles.tutor}>
-        Tutor<Text style={styles.link}>Link!</Text>
+                  Tutor<Text style={styles.link}>Link!</Text>
       </Text>
 
       <Image
@@ -16,8 +25,7 @@ export default function OB3({ navigation }) {
         alt="image"
       />
 
-      <Text style={styles.topic}>See all scheduled{"\n"}
-      classes in one place!</Text>
+      <Text style={darkMode ? styles.darkTopic : styles.topic}>Scheduled Classes</Text>
 
       <TouchableOpacity
         onPress={() => navigation.navigate("LoginScreen")}
@@ -34,6 +42,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#D9E3F0",
+    paddingHorizontal: 20,
+    width: "100%",
+    height: "100%",
+  },
+  darkContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "black",
     paddingHorizontal: 20,
     width: "100%",
@@ -46,6 +63,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 240,
   },
+  logo: {
+    width: 120,
+    height: 120,
+    position: 'relative',
+    bottom: 120,
+    right: 130,
+  },
   tutor: {
     color: "white",
     fontWeight: "bold",
@@ -53,7 +77,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
     position: "absolute",
     width: "100%",
-    top: 140,
+    top: 200,
+  },
+  darkTutor: {
+    color: "orange",
+    fontWeight: "bold",
+    fontSize: 50,
+    textAlign: "center",
+    position: "absolute",
+    width: "100%",
+    top: 200,
   },
   link: {
     color: "orange",
@@ -65,6 +98,17 @@ const styles = StyleSheet.create({
     fontSize: 40,
     textAlign: "center",
     marginTop: 300,
+    position: 'relative',
+    bottom: 120,
+  },
+  darkTopic: {
+    color: "orange",
+    fontWeight: "bold",
+    fontSize: 40,
+    textAlign: "center",
+    marginTop: 300,
+    position: 'relative',
+    bottom: 120,
   },
   button: {
     color: "white",

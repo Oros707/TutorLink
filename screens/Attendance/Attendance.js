@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useTheme } from '../Settings/ThemeContext'; // Import the useTheme hook
 import Icon from 'react-native-vector-icons/FontAwesome'; // Import your icon library
 
 function Attendance() {
   const navigation = useNavigation();
+  const { darkMode } = useTheme(); // Use the useTheme hook to get the theme information
 
   const handleScanQRCode = () => {
     // You can implement QR code scanning here and get the scanned data
@@ -19,8 +21,7 @@ function Attendance() {
   };
 
   return (
-    <View style={styles.container}>
-      
+    <View style={[styles.container, { backgroundColor: darkMode ? 'black' : (darkMode ? 'orange' : '#D9E3F0') }]}>
       <Button title="Scan QR Code" onPress={handleScanQRCode} />
       <Button title="Enter Link" onPress={handleEnterLink} />
     </View>
@@ -32,15 +33,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'darkgray', // Set the background color to dark grey
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
-    color: 'orange', // Set the text color to orange
-    // You can add more text styles such as fontFamily, fontWeight, etc.
   },
-  // Add more styles for buttons and other elements as needed
 });
 
 export default Attendance;

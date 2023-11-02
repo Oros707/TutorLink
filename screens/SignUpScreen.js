@@ -6,20 +6,21 @@ import {
   Image,
   TextInput,
   ScrollView,
+  StyleSheet,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { useNavigation } from "@react-navigation/native";
-import {
-  createUserWithEmailAndPassword,
-  fetchSignInMethodsForEmail,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from "firebase/auth";
 import { auth } from "../config/firebase";
+import { useTheme } from './Settings/ThemeContext'; // Import the useTheme hook
 import { themeColors } from "../theme";
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
+  const { darkMode } = useTheme(); // Use the useTheme hook to get the theme information
+
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState(""); // Add phoneNumber state
@@ -76,7 +77,7 @@ export default function SignUpScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: themeColors.bg }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: darkMode ? 'black' : themeColors.bg }}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={{ flex: 1, justifyContent: "space-between" }}>
           <View>
@@ -90,14 +91,14 @@ export default function SignUpScreen() {
               <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 style={{
-                  backgroundColor: "orange",
+                  backgroundColor: darkMode ? 'orange' : "orange",
                   padding: 2,
                   borderTopRightRadius: 20,
                   borderBottomLeftRadius: 20,
                   marginLeft: 4,
                 }}
               >
-                <ArrowLeftIcon size="20" color="black" />
+                <ArrowLeftIcon size="20" color={darkMode ? 'black' : 'white'} />
               </TouchableOpacity>
             </View>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
@@ -111,7 +112,7 @@ export default function SignUpScreen() {
             style={{
               borderTopLeftRadius: 50,
               borderTopRightRadius: 50,
-              backgroundColor: "white",
+              backgroundColor: darkMode ? 'black' : "white",
               padding: 16,
             }}
           >
@@ -120,14 +121,15 @@ export default function SignUpScreen() {
               <TextInput
                 style={{
                   padding: 12,
-                  backgroundColor: "#F5F5F5",
-                  color: "black",
+                  backgroundColor: darkMode ? '#181818' : "#F5F5F5",
+                  color: darkMode ? 'white' : "black",
                   borderRadius: 10,
                   marginBottom: 12,
                 }}
                 placeholder="Enter Name"
                 value={fullName}
                 onChangeText={(value) => setFullName(value)}
+                placeholderTextColor={darkMode ? 'white' : 'black'}
               />
               <Text style={{ color: "gray", marginBottom: 4 }}>
                 Email Address
@@ -135,14 +137,15 @@ export default function SignUpScreen() {
               <TextInput
                 style={{
                   padding: 12,
-                  backgroundColor: "#F5F5F5",
-                  color: "black",
+                  backgroundColor: darkMode ? '#181818' : "#F5F5F5",
+                  color: darkMode ? 'white' : "black",
                   borderRadius: 10,
                   marginBottom: 12,
                 }}
                 value={email}
                 onChangeText={(value) => setEmail(value)}
                 placeholder="Enter Email"
+                placeholderTextColor={darkMode ? 'white' : 'black'}
               />
               <Text style={{ color: "gray", marginBottom: 4 }}>
                 Phone Number
@@ -150,8 +153,8 @@ export default function SignUpScreen() {
               <TextInput
                 style={{
                   padding: 12,
-                  backgroundColor: "#F5F5F5",
-                  color: "black",
+                  backgroundColor: darkMode ? '#181818' : "#F5F5F5",
+                  color: darkMode ? 'white' : "black",
                   borderRadius: 10,
                   marginBottom: 12,
                 }}
@@ -159,13 +162,14 @@ export default function SignUpScreen() {
                 onChangeText={(value) => setPhoneNumber(value)}
                 placeholder="Enter Phone Number"
                 keyboardType="numeric"
+                placeholderTextColor={darkMode ? 'white' : 'black'}
               />
               <Text style={{ color: "gray", marginBottom: 4 }}>Password</Text>
               <TextInput
                 style={{
                   padding: 12,
-                  backgroundColor: "#F5F5F5",
-                  color: "black",
+                  backgroundColor: darkMode ? '#181818' : "#F5F5F5",
+                  color: darkMode ? 'white' : "black",
                   borderRadius: 10,
                   marginBottom: 16,
                 }}
@@ -173,11 +177,12 @@ export default function SignUpScreen() {
                 value={password}
                 onChangeText={(value) => setPassword(value)}
                 placeholder="Enter Password"
+                placeholderTextColor={darkMode ? 'white' : 'black'}
               />
               <TouchableOpacity
                 style={{
                   padding: 14,
-                  backgroundColor: "orange",
+                  backgroundColor: darkMode ? 'orange' : "orange",
                   borderRadius: 10,
                 }}
                 onPress={handleSubmit}
@@ -187,7 +192,7 @@ export default function SignUpScreen() {
                     fontSize: 20,
                     fontWeight: "bold",
                     textAlign: "center",
-                    color: "white",
+                    color: darkMode ? 'black' : 'white',
                   }}
                 >
                   Sign Up
@@ -196,7 +201,7 @@ export default function SignUpScreen() {
             </View>
             {error && (
               <Text
-                style={{ color: "red", textAlign: "center", marginTop: 12 }}
+                style={{ color: "red", textAlign: "center", marginTop: 12, color: 'red' }}
               >
                 {error}
               </Text>
@@ -222,25 +227,6 @@ export default function SignUpScreen() {
                 gap: 10,
               }}
             >
-              <TouchableOpacity
-                style={{
-                  padding: 12,
-                  borderRadius: 10,
-                }}
-              >
-                <Image
-                  source={require("../assets/icons/google.png")}
-                  style={{ height: 48 }}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  padding: 12,
-                  borderRadius: 10,
-                }}
-              >
-                <AntDesign name="apple1" size={48} color="black" />
-              </TouchableOpacity>
             </View>
             <View
               style={{
@@ -254,6 +240,7 @@ export default function SignUpScreen() {
                   color: "gray",
                   fontWeight: "bold",
                   marginBottom: 30,
+                  color: darkMode ? 'white' : 'gray',
                 }}
               >
                 Already have an account?
@@ -264,7 +251,7 @@ export default function SignUpScreen() {
                 <Text
                   style={{
                     fontWeight: "bold",
-                    color: "orange",
+                    color: darkMode ? 'orange' : 'orange',
                   }}
                 >
                   Login

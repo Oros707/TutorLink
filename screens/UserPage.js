@@ -2,9 +2,12 @@ import React from "react";
 import { View, Text, TouchableOpacity, Alert, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { auth, signOut, deleteUser } from "../config/firebase";
+import Settings from "../screens/Settings/Settings";
+import { useTheme } from '../screens/Settings/ThemeContext'; // Import the useTheme hook
 
 export default function UserPage() {
   const navigation = useNavigation();
+  const { darkMode } = useTheme(); // Use the useTheme hook to get the theme information
 
   const handleLogout = async () => {
     try {
@@ -44,14 +47,21 @@ export default function UserPage() {
     );
   };
 
+  const handleSettings = () =>{
+    navigation.navigate("Settings");
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>User Page</Text>
-      <TouchableOpacity style={styles.button} onPress={handleLogout}>
-        <Text style={styles.buttonText}>Logout</Text>
+    <View style={[styles.container, { backgroundColor: darkMode ? 'black' : '#FFFFF0' }]}>
+      <Text style={[styles.title, { color: darkMode ? 'white' : 'black' }]}>User Page</Text>
+      <TouchableOpacity style={[styles.button, { backgroundColor: darkMode ? 'orange' : 'blue' }]}>
+        <Text style={[styles.buttonText, { color: 'white' }]}>Logout</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.deleteButton} onPress={handleDeleteAccount}>
-        <Text style={styles.buttonText}>Delete Account</Text>
+      <TouchableOpacity style={[styles.deleteButton, { backgroundColor: darkMode ? 'orange' : 'red' }]}>
+        <Text style={[styles.buttonText, { color: 'white' }]}>Delete Account</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={handleSettings} style={[styles.button, { backgroundColor: darkMode ? 'orange' : 'blue' }]}>
+        <Text style={[styles.topic, { color: darkMode ? 'white' : 'black' }]}>Settings</Text>
       </TouchableOpacity>
     </View>
   );
@@ -65,24 +75,24 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    color: "black",
     marginBottom: 20,
   },
   button: {
-    backgroundColor: "orange",
     padding: 12,
     borderRadius: 10,
     margin: 10,
   },
   deleteButton: {
-    backgroundColor: "black",
     padding: 12,
     borderRadius: 10,
     margin: 10,
   },
   buttonText: {
     fontSize: 18,
-    color: "white",
+    textAlign: "center",
+  },
+  topic: {
+    fontSize: 18,
     textAlign: "center",
   },
 });

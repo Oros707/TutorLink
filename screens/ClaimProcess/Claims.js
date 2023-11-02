@@ -1,29 +1,30 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import Bubbles from '../../components/bubbles';
+import Bubbles from '../../components/bubbles'; // Updated Bubbles component
 import ClaimDetails from './ClaimDetails';
+import { useTheme } from '../Settings/ThemeContext';
 
 export default function Claims({ navigation }) {
   const handleNavigation = () => {
-    navigation.navigate(ClaimDetails)
+    navigation.navigate(ClaimDetails);
   }
+
+  const { darkMode } = useTheme();
+
   return (
-    <View style={styles.container}>
-      <Bubbles />
+    <View style={[styles.container, { backgroundColor: darkMode ? 'black' : '#D9E3F0' }]}>
+      <Bubbles darkMode={darkMode} />
       <Image
         style={styles.logo}
         source={require('../../images/UJ_LOGO_BW.png')}
-        alt="UJ Logo"
       />
 
       <Text style={styles.tutor}>
-        Let's make that <Text style={styles.link}>claim!</Text>
+      Process and submit payment <Text style={styles.link}>claims!</Text>
       </Text>
 
-      <Text style={styles.topic}></Text>
-      <Text style={styles.text}>
-        Submit and track payment claims easily.
-      </Text>
+    
+     
 
       <TouchableOpacity style={styles.button} onPress={handleNavigation}>
         <Text style={styles.buttonText}>Begin Process</Text>
@@ -35,9 +36,8 @@ export default function Claims({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center', // Changed from 'left' to 'center'
+    alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'black',
     paddingHorizontal: 30,
   },
   logo: {

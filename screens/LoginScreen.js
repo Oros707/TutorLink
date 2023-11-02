@@ -14,10 +14,13 @@ import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase";
+import { useTheme } from './Settings/ThemeContext'; // Import the useTheme hook
 import { themeColors } from "../theme";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
+  const { darkMode } = useTheme(); // Use the useTheme hook to get the theme information
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -52,8 +55,8 @@ export default function LoginScreen() {
   }, [email, password]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: themeColors.bg }}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <SafeAreaView>
+      <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: darkMode ? 'black' : '#D9E3F0' }}>
         <View style={{ flex: 1, justifyContent: "space-between" }}>
           <View>
             <View
@@ -63,10 +66,10 @@ export default function LoginScreen() {
                 padding: 8,
               }}
             ></View>
-            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <View >
               <Image
-                source={require("../assets/images/login.png")}
-                style={{ width: 200, height: 200 }}
+                source={require("../images/Onboarding/loginvidunscreen.gif")}
+                style={styles.image}
               />
             </View>
           </View>
@@ -74,26 +77,30 @@ export default function LoginScreen() {
             style={{
               borderTopLeftRadius: 50,
               borderTopRightRadius: 50,
-              backgroundColor: "white",
-              padding: 16,
+              backgroundColor: darkMode ? 'black' : '#D9E3F0',
+              padding: 36,
+              position: 'relative',
+              bottom: 50,
             }}
           >
             <View>
               <TextInput
                 style={{
                   padding: 12,
-                  backgroundColor: "#F5F5F5",
+                  backgroundColor: darkMode ? '#181818' : "#F5F5F5",
                   borderRadius: 10,
                   marginBottom: 12,
                 }}
                 placeholder="Email"
                 value={email}
                 onChangeText={(value) => setEmail(value)}
+                placeholderTextColor={darkMode ? 'white' : 'black'}
+                color={darkMode ? 'white' : 'black'}
               />
               <TextInput
                 style={{
                   padding: 12,
-                  backgroundColor: "#F5F5F5",
+                  backgroundColor: darkMode ? '#181818' : "#F5F5F5",
                   borderRadius: 10,
                   marginBottom: 16,
                 }}
@@ -101,6 +108,8 @@ export default function LoginScreen() {
                 placeholder="Password"
                 value={password}
                 onChangeText={(value) => setPassword(value)}
+                placeholderTextColor={darkMode ? 'white' : 'black'}
+                color={darkMode ? 'white' : 'black'}
               />
               <TouchableOpacity
                 onPress={handleSubmit}
@@ -130,7 +139,7 @@ export default function LoginScreen() {
             </View>
             {error && (
               <Text
-                style={{ color: "red", textAlign: "center", marginTop: 12 }}
+                style={{ color: "red", textAlign: "center", marginTop: 12, color: darkMode ? 'white' : 'red' }}
               >
                 {error}
               </Text>
@@ -140,7 +149,7 @@ export default function LoginScreen() {
               style={{ alignItems: "flex-end", marginTop: 10, height: 20 }}
               onPress={() => navigation.navigate("ForgotPassword")}
             >
-              <Text style={{ fontSize: 15, color: "gray", fontWeight: "bold" }}>
+              <Text style={styles.password}>
                 Forgot Password?
               </Text>
             </TouchableOpacity>
@@ -168,27 +177,7 @@ export default function LoginScreen() {
                   alignItems: "center",
                   gap: 10,
                 }}
-              >
-                <TouchableOpacity
-                  style={{
-                    padding: 12,
-                    borderRadius: 10,
-                  }}
-                >
-                  <Image
-                    source={require("../assets/icons/google.png")}
-                    style={{ height: 48, width: 48 }}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    padding: 12,
-                    borderRadius: 10,
-                  }}
-                >
-                  <AntDesign name="apple1" size={48} color="black" />
-                </TouchableOpacity>
-              </View>
+              ></View>
               <View
                 style={{
                   flexDirection: "row",
@@ -196,13 +185,13 @@ export default function LoginScreen() {
                   marginTop: 12,
                 }}
               >
-                <Text style={{ color: "gray", fontWeight: "bold" }}>
+                <Text style={{ fontSize: 20, color: "gray", fontWeight: "bold", marginRight:2, color: darkMode ? 'white' : 'gray' }}>
                   Don't have an account?
                 </Text>
                 <TouchableOpacity
                   onPress={() => navigation.navigate("SignUpScreen")}
                 >
-                  <Text style={{ fontWeight: "bold", color: "orange" }}>
+                  <Text style={{fontSize: 20, fontWeight: "bold", color: "orange" }}>
                     Sign Up
                   </Text>
                 </TouchableOpacity>
@@ -216,10 +205,18 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
-    justifyContent: "center",
-    alignItems: "center",
+  image: {
+    width: 400,
+    height: 300,
+    borderRadius: 30,
+    resizeMode: 'cover',
+    position: 'relative',
+    bottom: 20,
+  },
+  password: {
+    fontSize: 15,
+    color: "gray",
+    fontWeight: "bold",
+    marginRight: 90,
   },
 });
