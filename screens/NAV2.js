@@ -7,10 +7,7 @@ import Attendance from "./Attendance/Attendance";
 import Schedule from "./Schedule";
 import ClaimNavigator from "./ClaimProcess/ClaimNavigator";
 import ChatNavigator from './Chat/ChatNavigator';
-import LogoutNavigator from '../navigation/AppNavigator';
-import Settings from "./Settings/Settings";
 import SettingsNavigation from './SettingsNavigation';
-import ProfilePage from "./ProfilePage";
 
 const Tab = createBottomTabNavigator();
 
