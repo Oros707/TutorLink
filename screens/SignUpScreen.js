@@ -20,8 +20,7 @@ import { auth, db } from "../config/firebase";
 import { themeColors } from "../theme";
 import { addDoc, collection, doc, setDoc } from "@firebase/firestore";
 import { updateProfile } from "firebase/auth";
-import { useTheme } from './Settings/ThemeContext'; // Import the useTheme hook
-
+import { useTheme } from "./Settings/ThemeContext";
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
