@@ -5,7 +5,6 @@ import Claims from "./Claims";
 import BankingDetails from "./BankingDetails";
 import ClaimDetails from "./ClaimDetails";
 import Confirmation from "./Confirmation";
-import TemporaryAppointment from "./TemporaryAppointment";
 import ConfirmationResult from "./ConfirmationResult";
 import DetailsProvider from "./DetailsProvider";
 
@@ -39,13 +38,7 @@ const AppNavigator = () => {
             headerShown: false,
           }}
         />
-         <Stack.Screen
-          name="TemporaryAppointment"
-          component={TemporaryAppointment}
-          options={{
-            headerShown: false,
-          }}
-        />
+         
         <Stack.Screen
           name="Confirmation"
           component={Confirmation}

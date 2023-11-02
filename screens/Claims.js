@@ -1,7 +1,7 @@
 import { db } from "../config/firebase";
 import React, { useContext, useState, useEffect } from "react";
-import { View, Text, FlatList } from "react-native";
-import { onSnapshot, collection } from "firebase/firestore";
+import { View, Text, FlatList, Button } from "react-native";
+import { onSnapshot, collection, deleteDoc, doc } from "firebase/firestore";
 import DetailsContext from './ClaimProcess/DetailsContext';
 
 const Claims = () => {
@@ -23,6 +23,15 @@ const Claims = () => {
     };
   }, []);
 
+  const handleDeleteClaim = async (claimId) => {
+    try {
+      const claimDocRef = doc(db, "Claims", claimId);
+      await deleteDoc(claimDocRef);
+    } catch (error) {
+      console.error("Error deleting claim:", error);
+    }
+  };
+
   return (
     <View>
       <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>
@@ -32,13 +41,18 @@ const Claims = () => {
         data={claims}
         keyExtractor={(claim) => claim.id}
         renderItem={({ item }) => (
-          <View>
-            <Text>Claimed By: {item.claimedBy || "Unknown User"}</Text>
-            <Text>Contact E/T No.: {item.contactETNo}</Text>
-            <Text>Total Units: {item.totalUnits}</Text>
-            <Text>Rate: {item.rate}</Text>
-            <Text>Currency: {item.currency}</Text>
-            {/* Display more claim information as needed */}
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View style={{ flex: 1 }}>
+              <Text>Contact E/T No.: {item.contactETNo}</Text>
+              <Text>Total Hours Worked: {item.totalUnits}</Text>
+              <Text>Rate: {item.rate}</Text>
+              <Text>Amount Claimed: {item.amount}</Text>
+              <Text>Centre Number: {item.costCentreNumber}</Text>
+            </View>
+            <Button
+              title="Delete"
+              onPress={() => handleDeleteClaim(item.id)}
+            />
           </View>
         )}
       />

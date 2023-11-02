@@ -36,12 +36,14 @@ const ProfilePage = ({ navigation }) => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      navigation.navigate('LoginScreen'); // Redirect to the login page
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'LoginScreen' }],
+      });
     } catch (error) {
       console.error('Error signing out:', error);
     }
   };
-
   return isVisible ? (
     <View style={styles.container}>
       <View style={styles.profileContainer}>

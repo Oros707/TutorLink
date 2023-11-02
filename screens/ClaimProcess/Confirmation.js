@@ -32,7 +32,7 @@ export default function Confirmation() {
         ...BankingDetails,
         ...TemporaryAppointment,
         timestamp: serverTimestamp(),
-        claimedBy: item.fullName,  // optional: to record when the data was added
+         // optional: to record when the data was added
       };
   
       // Add the structured data to the Claims collection
