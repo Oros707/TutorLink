@@ -3,12 +3,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-
-import SplashScreen from "../screens/SplashScreen";
-import Claims from "../screens/ClaimProcess/Claims";
+import { SplashScreen } from "../screens";
+import Claims from "../screens/ClaimProcess/ClaimsWelcome";
 import Attendance from "../screens/Attendance/Attendance";
 import Schedule from "../screens/Schedule";
-import Chat from "../screens/Chat/Chat";
+import ChatNavigator from "../screens/Chat/ChatNavigator";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -55,8 +54,8 @@ function TabNavigator() {
             }}
         />
         <Tab.Screen
-            name="Chat"
-            component={Chat}
+            name="ChatNavigator"
+            component={ChatNavigator}
             options={{
             tabBarLabel: "Chat",
             tabBarIcon: ({ color, size }) => (

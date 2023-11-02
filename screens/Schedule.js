@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList ,StyleSheet } from 'react-native';
-import { Picker } from '@react-native-picker/-select';
+import { Picker } from '@react-native-picker/picker';
+import { useTheme } from './Settings/ThemeContext';
 import { db } from '../config/firebase'; // Import db from your Firebase configuration
 import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 
@@ -189,7 +190,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const pickerSelectStyles = StyleSheet.create({
+const SelectStyles = StyleSheet.create({
   inputIOS: {
     fontSize: 16,
     paddingVertical: 12,

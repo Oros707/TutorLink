@@ -2,18 +2,18 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTheme } from './Settings/ThemeContext'; // Import the useTheme hook from your context
 import Settings from './Settings/Settings';
-import UserPage from './UserPage';
-
+// import UserPage from './UserPage';
+import ProfilePage from './ProfilePage'
 const Stack = createStackNavigator();
 
 function SettingsNavigation() {
   const { darkMode } = useTheme(); // Use the useTheme hook to get the theme information
 
   return (
-    <Stack.Navigator initialRouteName="UserPage">
+    <Stack.Navigator initialRouteName="ProfilePage">
       <Stack.Screen
-        name="UserPage"
-        component={UserPage}
+        name="ProfilePage"
+        component={ProfilePage}
         options={{headerShown: false}}
       />
       <Stack.Screen

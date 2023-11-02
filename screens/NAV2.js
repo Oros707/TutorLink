@@ -7,9 +7,11 @@ import { useTheme } from './Settings/ThemeContext'; // Import the useTheme hook
 import Attendance from "./Attendance/Attendance";
 import Schedule from "./Schedule";
 import ClaimNavigator from "./ClaimProcess/ClaimNavigator";
-
+import ChatNavigator from './Chat/ChatNavigator';
+import LogoutNavigator from '../navigation/AppNavigator';
 import Settings from "./Settings/Settings";
 import SettingsNavigation from './SettingsNavigation';
+import ProfilePage from "./ProfilePage";
 
 const Tab = createBottomTabNavigator();
 
@@ -77,8 +79,8 @@ export default function NAV2() {
           }}
         />
         <Tab.Screen
-          name="LogoutNavigator"
-          component={LogoutNavigator}
+          name="ProfilePage"
+          component={ProfilePage}
           options={{
             tabBarLabel: "Profile",
             tabBarIcon: ({ color, size }) => (

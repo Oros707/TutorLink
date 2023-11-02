@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'; // Import your icon li
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AttendanceConfirmation from './AttendanceConfirmation';
 
-function Attendance({ navigation }) {
+function Attendance() {
   const navigation = useNavigation();
   const { darkMode } = useTheme(); // Use the useTheme hook to get the theme information
 
@@ -53,31 +53,30 @@ const styles = StyleSheet.create({
     color: 'orange', // Set the text color to orange
     // You can add more text styles such as fontFamily, fontWeight, etc.
   },
-  color: "orange",
-},
-image: {
-  top: -140,
-},
-buttons: {
-  marginBottom: 40,
-  paddingHorizontal: 20,
-  paddingVertical: 10,
-  backgroundColor: "orange",
-  borderRadius: 10,
-  marginRight: 20,
-  width: "95%",
-},
-btnText: {
-  fontSize: 24,
-  fontWeight: "bold",
-  color: "white",
-},
-btnCont: {
-  fontSize: 24,
-  flexDirection: "row",
-  color: "white",
-  width: "100%",
-  justifyContent: "center",
-};
+  image: {
+    top: -140,
+  },
+  buttons: {
+    marginBottom: 40,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: "orange",
+    borderRadius: 10,
+    marginRight: 20,
+    width: "95%",
+  },
+  btnText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "white",
+  },
+  btnCont: {
+    fontSize: 24,
+    flexDirection: "row",
+    color: "white",
+    width: "100%",
+    justifyContent: "center",
+  }
+});
 
 export default Attendance;

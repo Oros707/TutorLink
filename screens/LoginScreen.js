@@ -20,11 +20,12 @@ import { themeColors } from "../theme";
 export default function LoginScreen() {
   const navigation = useNavigation();
   const { darkMode } = useTheme(); // Use the useTheme hook to get the theme information
-
+  const [userDisplayName, setUserDisplayName] = useState('')
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
 
 
   const errorMessages = {
