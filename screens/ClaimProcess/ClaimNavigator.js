@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Claims from "./Claims";
+import Claims from "./ClaimsWelcome";
 import BankingDetails from "./BankingDetails";
 import ClaimDetails from "./ClaimDetails";
 import Confirmation from "./Confirmation";

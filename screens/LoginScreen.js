@@ -39,8 +39,6 @@ export default function LoginScreen() {
         setError(null);
         await signInWithEmailAndPassword(auth, email, password);
 
-        
-
         const user = auth.currentUser;
         if (user) {
           setUserDisplayName(user.displayName || "Unknown User");

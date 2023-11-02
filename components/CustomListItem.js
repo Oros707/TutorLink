@@ -36,7 +36,7 @@ const CustomListItem = ({ id, chatName, enterChat }) => {
         </ListItem.Title>
         <ListItem.Subtitle numberOfLines={1} ellipsizeMode="tail">
           {chatMessages.length ? (
-            chatMessages?.[0]?.displayName + " : " + chatMessages[0]?.message
+            chatMessages?.[0]?.displayName + ": " + chatMessages[0]?.message
           ) : (
             <Text style={{ color: "#888" }}>Start chatting</Text>
           )}
