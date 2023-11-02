@@ -2,8 +2,8 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTheme } from './Settings/ThemeContext'; // Import the useTheme hook from your context
 import Settings from './Settings/Settings';
-// import UserPage from './UserPage';
 import ProfilePage from './ProfilePage'
+import NAV1 from './NAV1';
 const Stack = createStackNavigator();
 
 function SettingsNavigation() {
@@ -21,6 +21,7 @@ function SettingsNavigation() {
         component={Settings}
         options={{headerShown:false}}
       />
+      <Stack.Screen name="NAV1" component={NAV1}/>
     </Stack.Navigator>
   );
 }

@@ -1,10 +1,11 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Alert, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { auth, signOut, deleteUser } from "../config/firebase";
+import { auth, deleteUser } from "../config/firebase";
 // import Settings from "../screens/Settings/Settings";
-import { useTheme } from '../screens/Settings/ThemeContext'; // Import the useTheme hook
+import { useTheme } from "../screens/Settings/ThemeContext"; // Import the useTheme hook
 import Settings from "./Settings/Settings";
+import { signOut } from "@firebase/auth";
 
 export default function UserPage() {
   const navigation = useNavigation();
@@ -12,8 +13,8 @@ export default function UserPage() {
 
   const handleLogout = async () => {
     try {
+      console.log("signout");
       await signOut(auth); // Sign out the current user
-      navigation.navigate("LoginScreen"); // Navigate to the login screen after logout
     } catch (error) {
       console.error("Error logging out:", error);
     }
@@ -48,21 +49,49 @@ export default function UserPage() {
     );
   };
 
-  const handleSettings = () =>{
+  const handleSettings = () => {
     navigation.navigate("Settings");
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: darkMode ? 'black' : '#FFFFF0' }]}>
-      <Text style={[styles.title, { color: darkMode ? 'white' : 'black' }]}>User Page</Text>
-      <TouchableOpacity style={[styles.button, { backgroundColor: darkMode ? 'orange' : 'blue' }]}>
-        <Text style={[styles.buttonText, { color: 'white' }]}>Logout</Text>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: darkMode ? "black" : "#FFFFF0" },
+      ]}
+    >
+      <Text style={[styles.title, { color: darkMode ? "white" : "black" }]}>
+        User Page
+      </Text>
+      <TouchableOpacity
+        style={[
+          styles.button,
+          { backgroundColor: darkMode ? "orange" : "blue" },
+        ]}
+        onPress={handleLogout}
+      >
+        <Text style={[styles.buttonText, { color: "white" }]}>Logout</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.deleteButton, { backgroundColor: darkMode ? 'orange' : 'red' }]}>
-        <Text style={[styles.buttonText, { color: 'white' }]}>Delete Account</Text>
+      <TouchableOpacity
+        style={[
+          styles.deleteButton,
+          { backgroundColor: darkMode ? "orange" : "red" },
+        ]}
+      >
+        <Text style={[styles.buttonText, { color: "white" }]}>
+          Delete Account
+        </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={handleSettings} style={[styles.button, { backgroundColor: darkMode ? 'orange' : 'blue' }]}>
-        <Text style={[styles.topic, { color: darkMode ? 'white' : 'black' }]}>Settings</Text>
+      <TouchableOpacity
+        onPress={handleSettings}
+        style={[
+          styles.button,
+          { backgroundColor: darkMode ? "orange" : "blue" },
+        ]}
+      >
+        <Text style={[styles.topic, { color: darkMode ? "white" : "black" }]}>
+          Settings
+        </Text>
       </TouchableOpacity>
     </View>
   );
