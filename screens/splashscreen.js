@@ -13,7 +13,7 @@ export default function SplashScreen() {
       style={styles.logo}
       source={require("../images/UJ_LOGO_BW.png")}
       alt="UJ Logo"
-    />
+    />6
 
     <Text style={styles.tutor}>
       Tutor<Text style={styles.link}>Link!</Text>

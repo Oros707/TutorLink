@@ -1,18 +1,25 @@
-import React, {useState, useEffect} from "react";
-import { NavigationContainer, DarkTheme, DefaultTheme  } from "@react-navigation/native";
+import React, { useState, useEffect } from "react";
+import {
+  NavigationContainer,
+  DarkTheme,
+  DefaultTheme,
+} from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { SplashScreen, OB1, OB2, OB3, NAV2 } from "../screens";
+import SplashScreen from "./SplashScreen";
+import OB1 from "./OB1";
+import OB2 from "./OB2";
+import OB3 from "./OB3";
+import NAV2 from "./NAV2";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import ForgotPassword from "./ForgotPassword";
 import AdminPage from "./AdminPage";
 import ProfilePage from "./ProfilePage";
 import AdminNavigator from "./AdminNavigator";
-import Settings from './Settings/Settings';
-import { EventRegister } from 'react-native-event-listeners';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useTheme } from './Settings/ThemeContext'; // Import the useTheme hook
-
+import Settings from "./Settings/Settings";
+import { EventRegister } from "react-native-event-listeners";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useTheme } from "./Settings/ThemeContext"; // Import the useTheme hook
 
 const Stack = createStackNavigator();
 
@@ -21,13 +28,13 @@ export default function NAV1() {
 
   useEffect(() => {
     // Retrieve the theme preference from AsyncStorage on component mount
-    AsyncStorage.getItem('theme').then((themePreference) => {
+    AsyncStorage.getItem("theme").then((themePreference) => {
       if (themePreference !== null) {
-        setDarkMode(themePreference === 'dark');
+        setDarkMode(themePreference === "dark");
       }
     });
 
-    const listener = EventRegister.addEventListener('changeTheme', (data) => {
+    const listener = EventRegister.addEventListener("changeTheme", (data) => {
       setDarkMode(data);
     });
 
@@ -79,7 +86,7 @@ export default function NAV1() {
           component={NAV2}
           options={{ headerShown: false }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="AdminNavigator"
           component={AdminNavigator}
           options={{ headerShown: false }}
@@ -89,7 +96,11 @@ export default function NAV1() {
           component={ProfilePage}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
+        <Stack.Screen
+          name="Settings"
+          component={Settings}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
