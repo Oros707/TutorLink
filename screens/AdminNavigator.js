@@ -3,7 +3,7 @@ import React from 'react'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AdminPage from './AdminPage';
 import Users from './Users';
-import Claims from './Claims';
+import Claims from './AdminClaims';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
