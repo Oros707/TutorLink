@@ -54,7 +54,6 @@ const Claims = () => {
             <Button
               title="Delete"
               onPress={() => handleDeleteClaim(item.id)}
-              color="red"
             />
           </View>
         )}
@@ -62,32 +61,5 @@ const Claims = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    top: 80,
-  },
-  subtitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  claimItem: {
-    backgroundColor: "white",
-    padding: 17,
-    margin: 5,
-    borderRadius: 15,
-    elevation: 5,
-    shadowColor: "black",
-    shadowOpacity: 0.5,
-    shadowOffset: { width: 0, height: 3 },
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  claimInfo: {
-    flex: 1,
-  },
-});
 
 export default Claims;

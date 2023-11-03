@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   containerDark: {
-    backgroundColor: 'black',
+    backgroundColor: '#333',
     flex: 1,
     alignItems: 'center',
   },

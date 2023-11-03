@@ -8,6 +8,7 @@ import Schedule from "./Schedule";
 import ClaimNavigator from "./ClaimProcess/ClaimNavigator";
 import ChatNavigator from './Chat/ChatNavigator';
 import SettingsNavigation from './SettingsNavigation';
+import QRCodeScanner from "./Attendance/QRCodeScanner";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +23,7 @@ export default function NAV2() {
           tabBarActiveTintColor: "orange",
           tabBarInactiveTintColor: darkMode ? "white" : "black",
           tabBarLabelStyle: { fontSize: 16, fontWeight: "bold" },
-          tabBarStyle: { backgroundColor: darkMode ? 'black' : '#D9E3F0' },
+          tabBarStyle: { backgroundColor: darkMode ? '#333' : '#D9E3F0' },
         }}
       >
         <Tab.Screen
@@ -42,7 +43,7 @@ export default function NAV2() {
         />
         <Tab.Screen
           name="Attendance"
-          component={Attendance}
+          component={QRCodeScanner}
           options={{
             tabBarLabel: "Attendance",
             tabBarIcon: ({ color, size }) => (
