@@ -1,128 +1,128 @@
-import React from "react";
-import { View, Text, TouchableOpacity, Alert, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { auth, deleteUser } from "../config/firebase";
-// import Settings from "../screens/Settings/Settings";
-import { useTheme } from "../screens/Settings/ThemeContext"; // Import the useTheme hook
-import Settings from "./Settings/Settings";
-import { signOut } from "@firebase/auth";
+import React, { useState, useEffect } from "react";
+import { View, Text, Image, Button, StyleSheet, TouchableOpacity } from "react-native";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { doc, onSnapshot } from "firebase/firestore";
+import { auth, db } from "../config/firebase"; // Import your Firebase config
 
-export default function UserPage() {
-  const navigation = useNavigation();
-  const { darkMode } = useTheme(); // Use the useTheme hook to get the theme information
+const ProfilePage = ({ navigation }) => {
+  const [userData, setUserData] = useState({});
+  const [isVisible, setIsVisible] = useState(false);
+  const user = auth.currentUser;
 
-  const handleLogout = async () => {
+  useEffect(() => {
+    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        setIsVisible(false);
+        setUserData({});
+      }
+    });
+
+    if (user) {
+      const unsubscribe = onSnapshot(doc(db, "users", user.uid), (document) => {
+        if (document.exists()) {
+          setUserData(document.data());
+          setIsVisible(true);
+        }
+      });
+
+      return () => {
+        unsubscribeAuth();
+        unsubscribe();
+      };
+    }
+  }, [user]);
+
+  const handleSignOut = async () => {
     try {
-      console.log("signout");
-      await signOut(auth); // Sign out the current user
+      await signOut(auth);
+      // navigation.navigate("LoginScreen"); // Redirect to the login page
     } catch (error) {
-      console.error("Error logging out:", error);
+      console.error("Error signing out:", error);
     }
   };
 
-  const handleDeleteAccount = () => {
-    // Show a confirmation dialog to confirm account deletion
-    Alert.alert(
-      "Confirm Account Deletion",
-      "Are you sure you want to delete your account? This action cannot be undone.",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Delete",
-          onPress: async () => {
-            try {
-              const user = auth.currentUser;
-
-              if (user) {
-                await deleteUser(user); // Delete the user's account
-                navigation.navigate("LoginScreen"); // Navigate to the login screen after deletion
-              }
-            } catch (error) {
-              console.error("Error deleting account:", error);
-            }
-          },
-        },
-      ]
-    );
-  };
-
   const handleSettings = () => {
-    navigation.navigate("Settings");
+    navigation.navigate("Settings"); // Navigate to the Settings screen
   };
 
-  return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor: darkMode ? "black" : "#FFFFF0" },
-      ]}
-    >
-      <Text style={[styles.title, { color: darkMode ? "white" : "black" }]}>
-        User Page
+  return isVisible ? (
+    <View style={styles.container}>
+      <Image
+        style={styles.profileImage}
+        source={require("../assets/images/userIcon.png")}
+      />
+
+      <Text style={styles.userName}>
+        <Text>Name: </Text> {userData.fullName}
       </Text>
+      <Text style={styles.userEmail}>
+        <Text>Email: </Text>
+        {userData.email}
+      </Text>
+      <Text style={styles.Phone}>
+        <Text>Phone Number: </Text>
+        {userData.phoneNumber}
+      </Text>
+
       <TouchableOpacity
-        style={[
-          styles.button,
-          { backgroundColor: darkMode ? "orange" : "blue" },
-        ]}
-        onPress={handleLogout}
+        style={styles.logoutButton}
+        onPress={handleSignOut}
       >
-        <Text style={[styles.buttonText, { color: "white" }]}>Logout</Text>
+        <Text style={styles.buttonText}>Sign Out</Text>
       </TouchableOpacity>
+
+
       <TouchableOpacity
-        style={[
-          styles.deleteButton,
-          { backgroundColor: darkMode ? "orange" : "red" },
-        ]}
-      >
-        <Text style={[styles.buttonText, { color: "white" }]}>
-          Delete Account
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+        style={styles.settingsButton}
         onPress={handleSettings}
-        style={[
-          styles.button,
-          { backgroundColor: darkMode ? "orange" : "blue" },
-        ]}
       >
-        <Text style={[styles.topic, { color: darkMode ? "white" : "black" }]}>
-          Settings
-        </Text>
+        <Text style={styles.buttonText}>Settings</Text>
       </TouchableOpacity>
     </View>
-  );
-}
+  ) : null;
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 170,
   },
-  title: {
-    fontSize: 24,
+  profileImage: {
+    width: 230,
+    height: 230,
+    borderRadius: 75,
     marginBottom: 20,
   },
-  button: {
-    padding: 12,
-    borderRadius: 10,
-    margin: 10,
+  userName: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
   },
-  deleteButton: {
+  userEmail: {
+    fontSize: 16,
+    color: "gray",
+  },
+  Phone: {
+    fontSize: 22,
+  },
+  logoutButton: {
     padding: 12,
     borderRadius: 10,
     margin: 10,
+    backgroundColor: "red",
+  },
+  settingsButton: {
+    padding: 12,
+    borderRadius: 10,
+    margin: 10,
+    backgroundColor: "blue",
   },
   buttonText: {
     fontSize: 18,
-    textAlign: "center",
-  },
-  topic: {
-    fontSize: 18,
-    textAlign: "center",
+    color: "white",
   },
 });
+
+export default ProfilePage;

@@ -49,9 +49,7 @@ export default function LoginScreen() {
         // Check if the email is "NomsaAdmin@gmail.com" and redirect to the AdminPage
         if (email.toLowerCase() === "nomsaadmin@gmail.com") {
           navigation.navigate("AdminNavigator");
-        } else {
-          navigation.replace("NAV2");
-        }
+        } 
       } catch (err) {
         console.log("got error: ", err.message);
         setError(errorMessages[err.code] || err.message);

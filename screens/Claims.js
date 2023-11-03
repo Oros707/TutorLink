@@ -1,6 +1,6 @@
 import { db } from "../config/firebase";
 import React, { useContext, useState, useEffect } from "react";
-import { View, Text, FlatList, Button, StyleSheet, ScrollView } from "react-native";
+import { View, Text, FlatList, Button, StyleSheet } from "react-native";
 import { onSnapshot, collection, deleteDoc, doc } from "firebase/firestore";
 import DetailsContext from './ClaimProcess/DetailsContext';
 
@@ -33,7 +33,7 @@ const Claims = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.subtitle}>Claims in the Database:</Text>
       <FlatList
         data={claims}
@@ -41,7 +41,7 @@ const Claims = () => {
         renderItem={({ item }) => (
           <View style={styles.claimItem}>
             <View style={styles.claimInfo}>
-              <Text>Name.: {item.name}</Text>
+              <Text>Name: {item.name}</Text>
               <Text>Surname: {item.surname}</Text>
               <Text>ID/Passport number: {item.identity}</Text>
               <Text>Gender: {item.gender}</Text>
@@ -59,7 +59,7 @@ const Claims = () => {
           </View>
         )}
       />
-    </ScrollView>
+    </View>
   );
 };
 
