@@ -19,7 +19,6 @@
     "@react-navigation/drawer": "^6.6.6",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",
-    "deprecated-react-native-prop-types": "^5.0.0",
     "expo-barcode-scanner": "~12.5.3",
     "expo-status-bar": "~1.6.0",
     "firebase": "^10.5.0",
