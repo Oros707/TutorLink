@@ -43,7 +43,7 @@ export default function NAV2() {
         />
         <Tab.Screen
           name="Attendance"
-          component={QRCodeScanner}
+          component={Attendance}
           options={{
             tabBarLabel: "Attendance",
             tabBarIcon: ({ color, size }) => (
