@@ -1,20 +1,19 @@
-
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const lightTheme = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   text: {
-    color: 'black',
+    color: "#333",
   },
 });
 
 export const darkTheme = StyleSheet.create({
   container: {
-    backgroundColor: 'black',
+    backgroundColor: "#333",
   },
   text: {
-    color: 'white',
+    color: "white",
   },
 });

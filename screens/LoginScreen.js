@@ -10,23 +10,22 @@ import {
   StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AntDesign } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase";
-import { useTheme } from './Settings/ThemeContext'; // Import the useTheme hook
+import { useTheme } from "./Settings/ThemeContext"; // Import the useTheme hook
 import { themeColors } from "../theme";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
   const { darkMode } = useTheme(); // Use the useTheme hook to get the theme information
-  const [userDisplayName, setUserDisplayName] = useState('')
+  const [userDisplayName, setUserDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(true);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
-
 
   const errorMessages = {
     "auth/user-not-found": "User not found. Please check your email.",
@@ -37,28 +36,30 @@ export default function LoginScreen() {
   };
 
   const handleSubmit = async () => {
-    if (email && password) {
-      try {
-        setLoading(true);
-        setError(null);
-        await signInWithEmailAndPassword(auth, email, password);
-        
+    if (!email || !password) {
+      setError("Please fill in both email and password fields.");
+      return;
+    }
 
-        const user = auth.currentUser;
-        if (user) {
-          setUserDisplayName(user.displayName || "Unknown User");
+    try {
+      setLoading(true);
+      setError(null);
+      await signInWithEmailAndPassword(auth, email, password);
 
-          navigation.navigate("Claims", { userDisplayName });
-        }
-        // Check if the email is "NomsaAdmin@gmail.com" and redirect to the AdminPage
-        if (email.toLowerCase() === "nomsaadmin@gmail.com") {
-          navigation.navigate("AdminNavigator");
-        } 
-      } catch (err) {
-        console.log("got error: ", err.message);
-        setError(errorMessages[err.code] || err.message);
-        setLoading(false);
+      const user = auth.currentUser;
+      if (user) {
+        setUserDisplayName(user.displayName || "Unknown User");
+
+        navigation.navigate("Claims", { userDisplayName });
       }
+
+      if (email.toLowerCase() === "nomsaadmin@gmail.com") {
+        navigation.navigate("AdminNavigator");
+      }
+    } catch (err) {
+      console.log("got error: ", err.message);
+      setError(errorMessages[err.code] || err.message);
+      setLoading(false);
     }
   };
 
@@ -67,9 +68,18 @@ export default function LoginScreen() {
     setLoading(false);
   }, [email, password]);
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
   return (
     <SafeAreaView>
-      <ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: darkMode ? 'black' : '#D9E3F0' }}>
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          backgroundColor: darkMode ? "#333" : "#D9E3F0",
+        }}
+      >
         <View style={{ flex: 1, justifyContent: "space-between" }}>
           <View>
             <View
@@ -79,7 +89,7 @@ export default function LoginScreen() {
                 padding: 8,
               }}
             ></View>
-            <View >
+            <View>
               <Image
                 source={require("../images/Onboarding/loginvidunscreen.gif")}
                 style={styles.image}
@@ -90,9 +100,9 @@ export default function LoginScreen() {
             style={{
               borderTopLeftRadius: 50,
               borderTopRightRadius: 50,
-              backgroundColor: darkMode ? 'black' : '#D9E3F0',
+              backgroundColor: darkMode ? "#333" : "#D9E3F0",
               padding: 36,
-              position: 'relative',
+              position: "relative",
               bottom: 50,
             }}
           >
@@ -100,30 +110,45 @@ export default function LoginScreen() {
               <TextInput
                 style={{
                   padding: 12,
-                  backgroundColor: darkMode ? '#181818' : "#F5F5F5",
+                  backgroundColor: darkMode ? "#181818" : "#F5F5F5",
                   borderRadius: 10,
                   marginBottom: 12,
                 }}
                 placeholder="Email"
                 value={email}
                 onChangeText={(value) => setEmail(value)}
-                placeholderTextColor={darkMode ? 'white' : 'black'}
-                color={darkMode ? 'white' : 'black'}
+                placeholderTextColor={darkMode ? "white" : "gray"}
+                color={darkMode ? "white" : "#333"}
               />
-              <TextInput
+              <View
                 style={{
-                  padding: 12,
-                  backgroundColor: darkMode ? '#181818' : "#F5F5F5",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingHorizontal: 10,
+                  backgroundColor: "#F5F5F5",
+                  color: "#333",
                   borderRadius: 10,
                   marginBottom: 16,
                 }}
-                secureTextEntry
-                placeholder="Password"
-                value={password}
-                onChangeText={(value) => setPassword(value)}
-                placeholderTextColor={darkMode ? 'white' : 'black'}
-                color={darkMode ? 'white' : 'black'}
-              />
+              >
+                <TextInput
+                  style={{
+                    flex: 1,
+                  }}
+                  secureTextEntry={passwordVisible}
+                  value={password}
+                  onChangeText={(value) => setPassword(value)}
+                  placeholder="Enter Password"
+                />
+                <TouchableOpacity onPress={togglePasswordVisibility}>
+                  <Feather
+                    name={passwordVisible ? "eye" : "eye-off"}
+                    size={20}
+                    color="gray"
+                    style={{ padding: 10 }}
+                  />
+                </TouchableOpacity>
+              </View>
               <TouchableOpacity
                 onPress={handleSubmit}
                 style={{
@@ -152,7 +177,12 @@ export default function LoginScreen() {
             </View>
             {error && (
               <Text
-                style={{ color: "red", textAlign: "center", marginTop: 12, color: darkMode ? 'white' : 'red' }}
+                style={{
+                  color: "red",
+                  textAlign: "center",
+                  marginTop: 12,
+                  color: darkMode ? "white" : "red",
+                }}
               >
                 {error}
               </Text>
@@ -162,9 +192,7 @@ export default function LoginScreen() {
               style={{ alignItems: "flex-end", marginTop: 10, height: 20 }}
               onPress={() => navigation.navigate("ForgotPassword")}
             >
-              <Text style={styles.password}>
-                Forgot Password?
-              </Text>
+              <Text style={styles.password}>Forgot Password?</Text>
             </TouchableOpacity>
             <View
               style={{
@@ -198,13 +226,27 @@ export default function LoginScreen() {
                   marginTop: 12,
                 }}
               >
-                <Text style={{ fontSize: 20, color: "gray", fontWeight: "bold", marginRight:2, color: darkMode ? 'white' : 'gray' }}>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: "gray",
+                    fontWeight: "bold",
+                    marginRight: 2,
+                    color: darkMode ? "white" : "gray",
+                  }}
+                >
                   Don't have an account?
                 </Text>
                 <TouchableOpacity
                   onPress={() => navigation.navigate("SignUpScreen")}
                 >
-                  <Text style={{fontSize: 20, fontWeight: "bold", color: "orange" }}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      color: "orange",
+                    }}
+                  >
                     Sign Up
                   </Text>
                 </TouchableOpacity>
@@ -222,8 +264,8 @@ const styles = StyleSheet.create({
     width: 400,
     height: 300,
     borderRadius: 30,
-    resizeMode: 'cover',
-    position: 'relative',
+    resizeMode: "cover",
+    position: "relative",
     bottom: 20,
   },
   password: {

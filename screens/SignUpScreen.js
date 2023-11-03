@@ -7,6 +7,7 @@ import {
   TextInput,
   ScrollView,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -24,14 +25,14 @@ import { useTheme } from "./Settings/ThemeContext";
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
-  const { darkMode } = useTheme(); // Use the useTheme hook to get the theme information
+  const { darkMode } = useTheme();
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const [passwordVisible, setPasswordVisible] = useState(true); // State for password visibility
+  const [passwordVisible, setPasswordVisible] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const errorMessages = {
@@ -81,14 +82,12 @@ export default function SignUpScreen() {
         .then((userCredential) => {
           const user = userCredential.user;
 
-          // Update the user's profile information
           return updateProfile(user, {
             displayName: fullName,
             photoURL:
               "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg",
           })
             .then(() => {
-              // Saving user data in Firestore
               return setDoc(doc(db, "users", user.uid), {
                 email: email,
                 fullName: fullName,
@@ -96,7 +95,6 @@ export default function SignUpScreen() {
               });
             })
             .then(() => {
-              // Navigate after successfully adding to Firestore
               navigation.navigate("LoginScreen");
               setEmail("");
               setFullName("");
@@ -117,6 +115,7 @@ export default function SignUpScreen() {
           const errorMessage = error.message;
           console.log(errorMessage);
           console.log(errorCode);
+          setLoading(false);
         });
     } catch (err) {
       console.log("Error: ", err.message);
@@ -125,7 +124,9 @@ export default function SignUpScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: darkMode ? 'black' : themeColors.bg }}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: darkMode ? "#333" : themeColors.bg }}
+    >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={{ flex: 1, justifyContent: "space-between" }}>
           <View>
@@ -139,14 +140,14 @@ export default function SignUpScreen() {
               <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 style={{
-                  backgroundColor: darkMode ? 'orange' : "orange",
+                  backgroundColor: darkMode ? "orange" : "orange",
                   padding: 2,
                   borderTopRightRadius: 20,
                   borderBottomLeftRadius: 20,
                   marginLeft: 4,
                 }}
               >
-                <ArrowLeftIcon size="20" color={darkMode ? 'black' : 'white'} />
+                <ArrowLeftIcon size="20" color={darkMode ? "#333" : "white"} />
               </TouchableOpacity>
             </View>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
@@ -160,7 +161,7 @@ export default function SignUpScreen() {
             style={{
               borderTopLeftRadius: 50,
               borderTopRightRadius: 50,
-              backgroundColor: darkMode ? 'black' : "white",
+              backgroundColor: darkMode ? "#333" : "white",
               padding: 16,
             }}
           >
@@ -169,15 +170,15 @@ export default function SignUpScreen() {
               <TextInput
                 style={{
                   padding: 12,
-                  backgroundColor: darkMode ? '#181818' : "#F5F5F5",
-                  color: darkMode ? 'white' : "black",
+                  backgroundColor: darkMode ? "#181818" : "#F5F5F5",
+                  color: darkMode ? "white" : "#333",
                   borderRadius: 10,
                   marginBottom: 12,
                 }}
                 placeholder="Enter Name"
                 value={fullName}
                 onChangeText={(value) => setFullName(value)}
-                placeholderTextColor={darkMode ? 'white' : 'black'}
+                placeholderTextColor={darkMode ? "white" : "#333"}
               />
               <Text style={{ color: "gray", marginBottom: 4 }}>
                 Email Address
@@ -185,15 +186,15 @@ export default function SignUpScreen() {
               <TextInput
                 style={{
                   padding: 12,
-                  backgroundColor: darkMode ? '#181818' : "#F5F5F5",
-                  color: darkMode ? 'white' : "black",
+                  backgroundColor: darkMode ? "#181818" : "#F5F5F5",
+                  color: darkMode ? "white" : "#333",
                   borderRadius: 10,
                   marginBottom: 12,
                 }}
                 value={email}
                 onChangeText={(value) => setEmail(value)}
                 placeholder="Enter Email"
-                placeholderTextColor={darkMode ? 'white' : 'black'}
+                placeholderTextColor={darkMode ? "white" : "#333"}
               />
               <Text style={{ color: "gray", marginBottom: 4 }}>
                 Phone Number
@@ -201,8 +202,8 @@ export default function SignUpScreen() {
               <TextInput
                 style={{
                   padding: 12,
-                  backgroundColor: darkMode ? '#181818' : "#F5F5F5",
-                  color: darkMode ? 'white' : "black",
+                  backgroundColor: darkMode ? "#181818" : "#F5F5F5",
+                  color: darkMode ? "white" : "#333",
                   borderRadius: 10,
                   marginBottom: 12,
                 }}
@@ -210,9 +211,9 @@ export default function SignUpScreen() {
                 onChangeText={(value) => setPhoneNumber(value)}
                 placeholder="Enter Phone Number"
                 keyboardType="numeric"
-                placeholderTextColor={darkMode ? 'white' : 'black'}
+                placeholderTextColor={darkMode ? "white" : "#333"}
               />
-               <View>
+              <View>
                 <Text style={{ color: "gray", marginBottom: 4 }}>Password</Text>
                 <View
                   style={{
@@ -220,7 +221,7 @@ export default function SignUpScreen() {
                     alignItems: "center",
                     paddingHorizontal: 10,
                     backgroundColor: "#F5F5F5",
-                    color: "black",
+                    color: "#333",
                     borderRadius: 10,
                     marginBottom: 16,
                   }}
@@ -248,17 +249,18 @@ export default function SignUpScreen() {
               <TouchableOpacity
                 style={{
                   padding: 14,
-                  backgroundColor: darkMode ? 'orange' : "orange",
+                  backgroundColor: darkMode ? "orange" : "orange",
                   borderRadius: 10,
                 }}
                 onPress={handleSubmit}
+                disabled={loading} // Disable button when loading
               >
                 <Text
                   style={{
                     fontSize: 20,
                     fontWeight: "bold",
                     textAlign: "center",
-                    color: darkMode ? 'black' : 'white',
+                    color: darkMode ? "#333" : "white",
                   }}
                 >
                   Sign Up
@@ -267,7 +269,12 @@ export default function SignUpScreen() {
             </View>
             {error && (
               <Text
-                style={{ color: "red", textAlign: "center", marginTop: 12, color: 'red' }}
+                style={{
+                  color: "red",
+                  textAlign: "center",
+                  marginTop: 12,
+                  color: "red",
+                }}
               >
                 {error}
               </Text>
@@ -292,8 +299,7 @@ export default function SignUpScreen() {
                 alignItems: "center",
                 gap: 10,
               }}
-            >
-            </View>
+            />
             <View
               style={{
                 flexDirection: "row",
@@ -306,7 +312,7 @@ export default function SignUpScreen() {
                   color: "gray",
                   fontWeight: "bold",
                   marginBottom: 30,
-                  color: darkMode ? 'white' : 'gray',
+                  color: darkMode ? "white" : "gray",
                 }}
               >
                 Already have an account?
@@ -317,7 +323,7 @@ export default function SignUpScreen() {
                 <Text
                   style={{
                     fontWeight: "bold",
-                    color: darkMode ? 'orange' : 'orange',
+                    color: darkMode ? "orange" : "orange",
                   }}
                 >
                   Login

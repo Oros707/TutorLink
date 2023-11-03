@@ -20,46 +20,31 @@ export default function Confirmation() {
   const [otp, setOTP] = useState('');
   const [remainingTime, setRemainingTime] = useState(60);
   const [details] = useContext(DetailsContext);
-  // Handle OTP confirmation logic
   const handleConfirm = async () => {
     try {
-      // De-structure details object for clarity
       const { ClaimDetails, BankingDetails, TemporaryAppointment } = details;
   
-      // Flatten/structure data (if necessary)
       const structuredData = {
         ...ClaimDetails,
         ...BankingDetails,
         ...TemporaryAppointment,
         timestamp: serverTimestamp(),
-         // optional: to record when the data was added
       };
   
-      // Add the structured data to the Claims collection
       await addDoc(collection(db, "Claims"), structuredData);
   
-      // Navigate after successful addition
-      navigation.navigate('ConfirmationResult'); // Replace with your success or failure screen
+      
+      navigation.navigate('ConfirmationResult'); 
     } catch (error) {
       console.error("Error adding document to Claims collection: ", error);
-      // Handle the error as per your app's UX
     }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.timerContainer}>
-        {/* Display the CountdownTimer component */}
-        <CountdownTimer duration={remainingTime} onComplete={handleConfirm} />
       </View>
-
-      <Text style={styles.label}>Enter OTP:</Text>
-      <TextInput
-        style={styles.input}
-        value={otp}
-        onChangeText={(text) => setOTP(text)}
-        placeholder="OTP"
-      />
+      
       <TouchableOpacity style={styles.button} onPress={handleConfirm}>
         <Text style={styles.buttonText}>Confirm</Text>
       </TouchableOpacity>
@@ -71,8 +56,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#333', // Dark grey background color
-    justifyContent: 'center', // Center content vertically
+    backgroundColor: '#333', 
+    justifyContent: 'center', 
   },
   timerContainer: {
     alignItems: 'center', // Center content horizontally

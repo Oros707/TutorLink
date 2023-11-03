@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, Button, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "../config/firebase"; // Import your Firebase config
@@ -64,18 +71,11 @@ const ProfilePage = ({ navigation }) => {
         {userData.phoneNumber}
       </Text>
 
-      <TouchableOpacity
-        style={styles.logoutButton}
-        onPress={handleSignOut}
-      >
+      <TouchableOpacity style={styles.logoutButton} onPress={handleSignOut}>
         <Text style={styles.buttonText}>Sign Out</Text>
       </TouchableOpacity>
 
-
-      <TouchableOpacity
-        style={styles.settingsButton}
-        onPress={handleSettings}
-      >
+      <TouchableOpacity style={styles.settingsButton} onPress={handleSettings}>
         <Text style={styles.buttonText}>Settings</Text>
       </TouchableOpacity>
     </View>
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     height: 230,
     borderRadius: 75,
     marginBottom: 20,
+    backgroundColor: "gray",
   },
   userName: {
     fontSize: 24,

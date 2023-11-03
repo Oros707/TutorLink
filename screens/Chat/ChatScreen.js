@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   senderText: {
-    color: "black",
+    color: "#333",
     fontWeight: "500",
     marginLeft: 10,
   },
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   receiverText: {
-    color: "black",
+    color: "#333",
     fontWeight: "500",
     marginRight: 10,
   },

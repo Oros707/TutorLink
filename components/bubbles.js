@@ -1,13 +1,18 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { useTheme } from '../screens/Settings/ThemeContext'; // Import the useTheme hook
+import { useTheme } from "../screens/Settings/ThemeContext"; // Import the useTheme hook
 
 export default function Bubbles({ darkMode }) {
   const { darkMode: themeDarkMode } = useTheme();
   const isDarkMode = darkMode ?? themeDarkMode; // Use the prop if provided, otherwise use the theme
 
   return (
-    <View style={[styles.container, { backgroundColor: isDarkMode ? 'black' : '#D9E3F0' }]}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: isDarkMode ? "#333" : "#D9E3F0" },
+      ]}
+    >
       <View style={styles.circle1}></View>
       <View style={styles.circle2}></View>
     </View>
@@ -22,7 +27,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     position: "absolute",
-    
   },
   circle1: {
     width: 200,

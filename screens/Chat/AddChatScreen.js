@@ -30,7 +30,7 @@ const AddChatScreen = ({ navigation }) => {
     navigation.setOptions({
       title: "Add New Group Chat",
       headerStyle: { backgroundColor: "orange" },
-      headerTitleStyle: { color: "black" },
+      headerTitleStyle: { color: "#333" },
     });
   }, [navigation]);
 
@@ -40,7 +40,7 @@ const AddChatScreen = ({ navigation }) => {
         placeholder="Enter a chat name"
         value={input}
         onChangeText={(text) => setInput(text)}
-        leftIcon={<AntDesign name="wechat" size={24} color="black" />}
+        leftIcon={<AntDesign name="wechat" size={24} color="#333" />}
       />
       <Button
         disabled={!input}

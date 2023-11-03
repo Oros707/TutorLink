@@ -58,7 +58,7 @@ const HomeScreen = ({ navigation }) => {
     navigation.setOptions({
       title: "TutorLink",
       headerStyle: { backgroundColor: "orange" },
-      headerTitleStyle: { color: "black" },
+      headerTitleStyle: { color: "#333" },
       headerLeft: () => (
         <View style={{ marginVertical: 20 }}>
           <TouchableOpacity onPress={handleSignOut} activeOpacity={0.5}>
@@ -80,7 +80,7 @@ const HomeScreen = ({ navigation }) => {
             activeOpacity={0.5}
             onPress={() => navigation.navigate("AddChat")}
           >
-            <MaterialIcons name="group-add" size={24} color="black" />
+            <MaterialIcons name="group-add" size={24} color="#333" />
           </TouchableOpacity>
         </View>
       ),

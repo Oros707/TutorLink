@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Bubbles from "../components/bubbles";
 import { useNavigation } from "@react-navigation/native";
-import { useTheme } from './Settings/ThemeContext';
+import { useTheme } from "./Settings/ThemeContext";
 
 export default function OB3({ navigation }) {
   const { darkMode } = useTheme();
@@ -16,7 +16,7 @@ export default function OB3({ navigation }) {
       />
 
       <Text style={styles.tutor}>
-                  Tutor<Text style={styles.link}>Link!</Text>
+        Tutor<Text style={styles.link}>Link!</Text>
       </Text>
 
       <Image
@@ -25,7 +25,9 @@ export default function OB3({ navigation }) {
         alt="image"
       />
 
-      <Text style={darkMode ? styles.darkTopic : styles.topic}>Scheduled Classes</Text>
+      <Text style={darkMode ? styles.darkTopic : styles.topic}>
+        Scheduled Classes
+      </Text>
 
       <TouchableOpacity
         onPress={() => navigation.replace("LoginScreen")}
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "black",
+    backgroundColor: "#333",
     paddingHorizontal: 20,
     width: "100%",
     height: "100%",
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 120,
     height: 120,
-    position: 'relative',
+    position: "relative",
     bottom: 120,
     right: 130,
   },
@@ -98,7 +100,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     textAlign: "center",
     marginTop: 300,
-    position: 'relative',
+    position: "relative",
     bottom: 120,
   },
   darkTopic: {
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     textAlign: "center",
     marginTop: 300,
-    position: 'relative',
+    position: "relative",
     bottom: 120,
   },
   button: {
