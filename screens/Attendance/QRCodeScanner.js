@@ -4,7 +4,7 @@ import { RNCamera } from "react-native-camera";
 import firebase from "@react-native-firebase/app";
 import AttendanceConfirmation from "./AttendanceConfirmation";
 
-function QRCodeScanner({ navigation }) {
+function QRCodeScanner() {
   const [scanned, setScanned] = useState(false);
 
   const handleBarCodeScanned = async ({ data }) => {
