@@ -18,7 +18,6 @@ import {
 export default function Confirmation() {
   const navigation = useNavigation();
   const [otp, setOTP] = useState('');
-  const [remainingTime, setRemainingTime] = useState(60);
   const [details] = useContext(DetailsContext);
   const handleConfirm = async () => {
     try {

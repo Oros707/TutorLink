@@ -140,8 +140,8 @@ export default function ClaimDetails() {
           <ModalDropdown
             options={["African", "Colored", "Indian", "White"]}
             defaultValue="Select Race"
-            onSelect={(value) => setRace(value)}
-            initialScrollIndex={0}
+            onSelect={(index,value) => setRace(value)}
+            initialScrollIndex
           />
         </View>
 
