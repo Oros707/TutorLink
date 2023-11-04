@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { auth } from "../config/firebase";
-import { sendPasswordResetEmail } from "firebase/auth";
+import { sendPasswordResetEmail, fetchSignInMethodsForEmail } from "firebase/auth";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -21,15 +21,12 @@ export default function ForgotPassword() {
       setIsEmailSent(true);
       setError(null);
     } catch (error) {
-      if (error.code === "auth/user-not-found") {
-        setError("User with this email address does not exist.");
-      } else {
-        setError("Failed to send the password reset email. Please check your email address.");
-        console.log(error.message);
-      }
+      setError("Failed to send the password reset email. Please check your email address.");
+      console.log(error.message);
       setIsEmailSent(false);
     }
   };
+  
 
   return (
     <View style={styles.container}>

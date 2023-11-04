@@ -25,7 +25,7 @@ export default function Claims({ navigation }) {
       />
 
       <Text style={styles.tutor}>
-        Process and submit payment <Text style={styles.link}>claims!</Text>
+        Process and Submit Appointment and Remuneration <Text style={styles.link}>Claims!</Text>
       </Text>
 
       <TouchableOpacity style={styles.button} onPress={handleNavigation}>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   tutor: {
     color: "white",
     fontWeight: "bold",
-    fontSize: 50,
+    fontSize: 30,
   },
   link: {
     color: "orange",
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     backgroundColor: "orange",
     borderRadius: 50,
     alignItems: "center",
-    marginTop: 60,
+    marginTop: 130,
   },
   buttonText: {
     color: "white",

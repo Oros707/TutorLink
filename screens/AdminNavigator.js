@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AdminPage from "./AdminPage";
@@ -13,12 +12,13 @@ const AdminNavigator = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="AdminPage"
+        name="Admin"
         component={AdminPage}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="admin-panel-settings" size={24} color="#333" />
           ),
+          headerShown: false,
         }}
       ></Tab.Screen>
 
@@ -29,6 +29,7 @@ const AdminNavigator = () => {
           tabBarIcon: ({ color, size }) => (
             <Feather name="users" size={24} color="#333" />
           ),
+          headerShown: false,
         }}
       ></Tab.Screen>
       <Tab.Screen
@@ -38,6 +39,7 @@ const AdminNavigator = () => {
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="typewriter" size={24} color="#333" />
           ),
+          headerShown: false,
         }}
       ></Tab.Screen>
     </Tab.Navigator>

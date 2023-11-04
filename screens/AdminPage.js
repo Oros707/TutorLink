@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { auth, db } from "../config/firebase"; // Import your Firebase config
+import { auth, db } from "../config/firebase";
 import { signOut } from "@firebase/auth";
 
 const AdminPage = () => {
   const handleLogout = async () => {
     try {
       console.log("signout");
-      await signOut(auth); // Sign out the current user
+      await signOut(auth);
     } catch (error) {
       console.error("Error logging out:", error);
     }
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#999",
   },
   header: {
     alignItems: "center",

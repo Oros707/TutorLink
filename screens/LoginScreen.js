@@ -110,15 +110,15 @@ export default function LoginScreen() {
               <TextInput
                 style={{
                   padding: 12,
-                  backgroundColor: darkMode ? "#181818" : "#F5F5F5",
+                  backgroundColor: darkMode ? "#F5F5F5" : "#F5F5F5",
                   borderRadius: 10,
                   marginBottom: 12,
                 }}
                 placeholder="Email"
                 value={email}
                 onChangeText={(value) => setEmail(value)}
-                placeholderTextColor={darkMode ? "white" : "gray"}
-                color={darkMode ? "white" : "#333"}
+                placeholderTextColor={darkMode ? "gray" : "gray"}
+                color={darkMode ? "#333" : "#333"}
               />
               <View
                 style={{
@@ -142,9 +142,10 @@ export default function LoginScreen() {
                 />
                 <TouchableOpacity onPress={togglePasswordVisibility}>
                   <Feather
-                    name={passwordVisible ? "eye" : "eye-off"}
+                    name={passwordVisible ? "eye-off" : "eye"}
                     size={20}
-                    color="gray"
+                    color={passwordVisible ? "gray" : "red"}
+                    
                     style={{ padding: 10 }}
                   />
                 </TouchableOpacity>

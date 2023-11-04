@@ -2,7 +2,7 @@ import { db } from "../config/firebase";
 import React, { useContext, useState, useEffect } from "react";
 import { View, Text, FlatList, Button, StyleSheet } from "react-native";
 import { onSnapshot, collection, deleteDoc, doc } from "firebase/firestore";
-import DetailsContext from './ClaimProcess/DetailsContext';
+import DetailsContext from "./ClaimProcess/DetailsContext";
 
 const Claims = () => {
   const [claims, setClaims] = useState([]);
@@ -51,15 +51,36 @@ const Claims = () => {
               <Text>Disability: {item.disability}</Text>
               <Text>Race: {item.race}</Text>
             </View>
-            <Button
-              title="Delete"
-              onPress={() => handleDeleteClaim(item.id)}
-            />
+            <Button title="Delete" onPress={() => handleDeleteClaim(item.id)} />
           </View>
         )}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    marginTop: 40,
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 12,
+  },
+  claimItem: {
+    backgroundColor: "#D9E3F0",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 12,
+    marginVertical: 8,
+  },
+  claimInfo: {
+    flex: 1,
+  },
+});
 
 export default Claims;

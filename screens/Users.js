@@ -49,7 +49,9 @@ const UsersPage = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.subtitle}>Users in the Database:</Text>
+      <View>
+        <Text style={styles.subtitle}>Users in the Database:</Text>
+      </View>
       {loading ? (
         <ActivityIndicator size="large" color="blue" />
       ) : (
@@ -99,9 +101,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
+    textAlign: 'left'
   },
   userItem: {
-    backgroundColor: "white",
+    backgroundColor: "#D9E3F0",
     padding: 17,
     margin: 5,
     borderRadius: 15,

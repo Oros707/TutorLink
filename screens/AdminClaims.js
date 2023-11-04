@@ -14,7 +14,7 @@ import { AntDesign } from "@expo/vector-icons";
 
 const Claims = () => {
   const [claims, setClaims] = useState([]);
-  const [loading, setLoading] = useState(true); // State for loading
+  const [loading, setLoading] = useState(true);
   const details = useContext(DetailsContext);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Claims = () => {
         ...doc.data(),
       }));
       setClaims(claimsList);
-      setLoading(false); // Update loading state when data is fetched
+      setLoading(false); 
     });
 
     return () => {
@@ -43,7 +43,6 @@ const Claims = () => {
   };
 
   if (loading) {
-    // Show loading indicator
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#0000ff" />
@@ -95,6 +94,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: "#F5F5F5",
+    top: 40,
   },
   subtitle: {
     fontSize: 18,
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   claimItem: {
-    backgroundColor: "white",
+    backgroundColor: "#D9E3F0",
     padding: 17,
     margin: 5,
     borderRadius: 15,

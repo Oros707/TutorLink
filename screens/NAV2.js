@@ -41,7 +41,7 @@ export default function NAV2() {
         name="AttNavigator"
         component={AttNavigator}
         options={{
-          tabBarLabel: "AttNavigator",
+          tabBarLabel: "Attendance",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="calendar-outline" size={size} color={color} />
           ),

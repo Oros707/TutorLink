@@ -32,7 +32,6 @@ const HomeScreen = ({ navigation }) => {
           text: "Sign Out",
           onPress: () => {
             auth.signOut().then(() => {
-              navigation.replace("Login");
             });
           },
         },
