@@ -16,7 +16,7 @@ const AttNavigator = () => {
         name="Attendance"
         component={Attendance}
         options={{
-          headerShown: true,
+          headerShown: false,
         }}
       />
       <Stack.Screen

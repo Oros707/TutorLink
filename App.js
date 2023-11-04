@@ -1,10 +1,12 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, LogBox } from "react-native";
 import NAV1 from "./screens/NAV1";
 import { ThemeProvider } from "./screens/Settings/ThemeProvider";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function App() {
+  LogBox.ignoreAllLogs();
+
   return (
     <ThemeProvider>
       <GestureHandlerRootView style={styles.container}>
@@ -13,7 +15,6 @@ export default function App() {
     </ThemeProvider>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     width: "100%",
