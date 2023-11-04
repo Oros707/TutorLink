@@ -8,7 +8,7 @@ import Schedule from "./Schedule";
 import ClaimNavigator from "./ClaimProcess/ClaimNavigator";
 import ChatNavigator from "./Chat/ChatNavigator";
 import SettingsNavigation from "./SettingsNavigation";
-import QRCodeScanner from "./Attendance/QRCodeScanner";
+import AttNavigator from "./Attendance/AttendanceNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -38,10 +38,10 @@ export default function NAV2() {
         }}
       />
       <Tab.Screen
-        name="Attendance"
-        component={Attendance}
+        name="AttNavigator"
+        component={AttNavigator}
         options={{
-          tabBarLabel: "Attendance",
+          tabBarLabel: "AttNavigator",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="calendar-outline" size={size} color={color} />
           ),

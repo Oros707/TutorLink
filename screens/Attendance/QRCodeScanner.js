@@ -1,39 +1,89 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { RNCamera } from "react-native-camera";
-import firebase from "@react-native-firebase/app";
-import AttendanceConfirmation from "./AttendanceConfirmation";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import { db } from "../../config/firebase";
+import { collection, addDoc } from "firebase/firestore";
 
-function QRCodeScanner() {
-  const [scanned, setScanned] = useState(false);
+export default function QRCodeScanner({ navigation }) {
+  const [hasPermission, setHasPermission] = useState(false);
+  const [scanData, setScanData] = useState(null);
+  const [scanningComplete, setScanningComplete] = useState(false);
 
-  const handleBarCodeScanned = async ({ data }) => {
-    if (!scanned) {
-      setScanned(true);
+  useEffect(() => {
+    (async () => {
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status === "granted");
+    })();
+  }, []);
 
-      const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-      const scannedData = {
-        data,
-        timestamp,
+  if (!hasPermission) {
+    return (
+      <View style={styles.container}>
+        <Text>Please grant camera permissions to the app.</Text>
+      </View>
+    );
+  }
+
+  const handleBarCodeScanned = async ({ type, data }) => {
+    if (!scanData) {
+      const timestamp = new Date().toLocaleString();
+      const [date, time] = timestamp.split(", ");
+
+      const attendanceData = {
+        Date: date,
+        Time: time,
+        QRData: data,
       };
 
       try {
-        const docRef = await firebase
-          .firestore()
-          .collection("scannedData")
-          .add(scannedData);
-        console.log("Data saved to Firestore with ID: ", docRef.id);
+        const docRef = await addDoc(
+          collection(db, "Attendance"),
+          attendanceData
+        );
+        console.log("Data saved to Firebase with ID:", docRef.id);
       } catch (error) {
-        console.error("Error saving data to Firestore: ", error);
+        console.error("Error saving data to Firebase: ", error);
       }
-
-      navigation.navigate("AttendanceConfirmation", { data });
+      setScanData(attendanceData);
+      setScanningComplete(true);
     }
   };
 
   return (
     <View style={styles.container}>
-      <RNCamera style={styles.camera} onBarCodeRead={handleBarCodeScanned} />
+      <BarCodeScanner
+        style={StyleSheet.absoluteFillObject}
+        onBarCodeScanned={scanData ? undefined : handleBarCodeScanned}
+      />
+      {scanData && (
+        <View
+          style={{
+            borderRadius: 10,
+            backgroundColor: "rgba(255,255,255,0.5)",
+            padding: 10,
+          }}
+        >
+          <Text style={styles.text}>Scanned Data: {scanData.QRData}</Text>
+          <Text style={styles.text}>Date: {scanData.Date}</Text>
+          <Text style={styles.text}>Time: {scanData.Time}</Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setScanData(null)}
+          >
+            <Text style={styles.buttonText}>Scan Again?</Text>
+          </TouchableOpacity>
+          {scanningComplete && (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate("AttendanceHistory")}
+            >
+              <Text style={styles.buttonText}>Done!</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
+      <StatusBar style="auto" />
     </View>
   );
 }
@@ -41,13 +91,29 @@ function QRCodeScanner() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    backgroundColor: "lightgrey",
     alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
   },
   camera: {
-    flex: 1,
     width: "100%",
+    height: "100%",
+  },
+  text: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "white",
+  },
+  button: {
+    backgroundColor: "orange",
+    marginTop: 5,
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
-
-export default QRCodeScanner;
