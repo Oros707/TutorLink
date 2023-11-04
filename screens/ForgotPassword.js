@@ -43,7 +43,7 @@ export default function ForgotPassword() {
       {error && <Text style={styles.errorText}>{error}</Text>}
       {isEmailSent && (
         <Text style={styles.successText}>
-          Password reset email sent. Check your inbox.
+          Password reset email sent. Check your inbox. Check spam folder.
         </Text>
       )}
     </View>
