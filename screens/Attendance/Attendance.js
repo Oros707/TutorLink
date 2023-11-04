@@ -24,7 +24,7 @@ function Attendance() {
           styles.container,
           {
             backgroundColor: darkMode
-              ? "black"
+              ? "#33"
               : darkMode
               ? "orange"
               : "#D9E3F0",

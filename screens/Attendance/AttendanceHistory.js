@@ -66,7 +66,7 @@ export default function AttendanceHistory({ navigation }) {
       style={[
         styles.container,
         {
-          backgroundColor: darkMode ? "black" : "#D9E3F0",
+          backgroundColor: darkMode ? "#333" : "#D9E3F0",
         },
       ]}
     >
@@ -74,7 +74,7 @@ export default function AttendanceHistory({ navigation }) {
         <View style={styles.activityIndicatorContainer}>
           <ActivityIndicator
             size="large"
-            color={darkMode ? "white" : "black"}
+            color={darkMode ? "white" : "#333"}
           />
         </View>
       ) : (
@@ -83,7 +83,7 @@ export default function AttendanceHistory({ navigation }) {
             style={[
               styles.heading,
               {
-                color: darkMode ? "white" : "black",
+                color: darkMode ? "white" : "#333",
               },
             ]}
           >
@@ -107,12 +107,12 @@ export default function AttendanceHistory({ navigation }) {
               <AntDesign
                 name={sortAscending ? "arrowup" : "arrowdown"}
                 size={16}
-                color={darkMode ? "white" : "black"}
+                color={darkMode ? "white" : "#333"}
               />
               <Text>{"  "}</Text>
               <Text
                 style={{
-                  color: darkMode ? "white" : "black",
+                  color: darkMode ? "white" : "#333",
                 }}
               >
                 {sortingOptions[sortAscending ? 0 : 1]}
@@ -127,7 +127,7 @@ export default function AttendanceHistory({ navigation }) {
                 style={styles.head}
                 textStyle={[
                   styles.headText,
-                  { color: darkMode ? "white" : "black" },
+                  { color: darkMode ? "white" : "#333" },
                 ]}
               />
             </Table>
@@ -136,7 +136,7 @@ export default function AttendanceHistory({ navigation }) {
                 data={tableData.slice(1)}
                 textStyle={[
                   styles.rowText,
-                  { color: darkMode ? "white" : "black" },
+                  { color: darkMode ? "white" : "#333" },
                 ]}
               />
             </Table>

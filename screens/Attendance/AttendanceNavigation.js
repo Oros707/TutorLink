@@ -10,7 +10,7 @@ const AttNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName="AttNavigator"
-      screenOptions={{ backgroundColor: "black" }}
+      screenOptions={{ backgroundColor: "#333" }}
     >
       <Stack.Screen
         name="Attendance"

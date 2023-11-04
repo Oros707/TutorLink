@@ -42,14 +42,13 @@ const ProfilePage = ({ navigation }) => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      // navigation.navigate("LoginScreen"); // Redirect to the login page
     } catch (error) {
       console.error("Error signing out:", error);
     }
   };
 
   const handleSettings = () => {
-    navigation.navigate("Settings"); // Navigate to the Settings screen
+    navigation.navigate("Settings"); 
   };
 
   return isVisible ? (

@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Settings() {
   const { darkMode, toggleDarkMode } = useTheme();
-  const navigation = useNavigation(); // Use the useNavigation hook to navigate back
+  const navigation = useNavigation(); 
 
   const saveDarkModeSetting = async (darkMode) => {
     try {
