@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import {
   collection,
   getDocs,
@@ -19,6 +25,7 @@ export default function AttendanceHistory({ navigation }) {
   const [attendanceData, setAttendanceData] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [sortAscending, setSortAscending] = useState(true);
+  const [isFetching, setIsFetching] = useState(true);
   const { darkMode } = useTheme();
   const sortingOptions = ["Ascending", "Descending"];
 
@@ -40,6 +47,8 @@ export default function AttendanceHistory({ navigation }) {
       setTableData([["Data", "Date", "Time"], ...data]);
     } catch (error) {
       console.error("Error fetching data from Firestore: ", error);
+    } finally {
+      setIsFetching(false);
     }
   };
 
@@ -61,69 +70,79 @@ export default function AttendanceHistory({ navigation }) {
         },
       ]}
     >
-      <Text
-        style={[
-          styles.heading,
-          {
-            color: darkMode ? "white" : "black",
-          },
-        ]}
-      >
-        Attendance History
-      </Text>
-      <Text>{"  "}</Text>
-      <TouchableOpacity
-        style={styles.home}
-        onPress={() => navigation.navigate("Attendance")}
-      >
-        <Text style={styles.homeText}>Home</Text>
-      </TouchableOpacity>
-      <ModalDropdown
-        options={sortingOptions}
-        style={styles.dropdown}
-        textStyle={styles.dropdownText}
-        dropdownStyle={styles.dropdownContainer}
-        dropdownTextStyle={styles.dropdownItemText}
-        onSelect={handleSortingOptionSelect}
-      >
-        <View style={styles.dropdownTrigger}>
-          <AntDesign
-            name={sortAscending ? "arrowup" : "arrowdown"}
-            size={16}
+      {isFetching ? (
+        <View style={styles.activityIndicatorContainer}>
+          <ActivityIndicator
+            size="large"
             color={darkMode ? "white" : "black"}
           />
-          <Text>{"  "}</Text>
-          <Text
-            style={{
-              color: darkMode ? "white" : "black",
-            }}
-          >
-            {sortingOptions[sortAscending ? 0 : 1]}
-          </Text>
         </View>
-      </ModalDropdown>
+      ) : (
+        <>
+          <Text
+            style={[
+              styles.heading,
+              {
+                color: darkMode ? "white" : "black",
+              },
+            ]}
+          >
+            Attendance History
+          </Text>
+          <TouchableOpacity
+            style={styles.home}
+            onPress={() => navigation.navigate("Attendance")}
+          >
+            <Text style={styles.homeText}>Home</Text>
+          </TouchableOpacity>
+          <ModalDropdown
+            options={sortingOptions}
+            style={styles.dropdown}
+            textStyle={styles.dropdownText}
+            dropdownStyle={styles.dropdownContainer}
+            dropdownTextStyle={styles.dropdownItemText}
+            onSelect={handleSortingOptionSelect}
+          >
+            <View style={styles.dropdownTrigger}>
+              <AntDesign
+                name={sortAscending ? "arrowup" : "arrowdown"}
+                size={16}
+                color={darkMode ? "white" : "black"}
+              />
+              <Text>{"  "}</Text>
+              <Text
+                style={{
+                  color: darkMode ? "white" : "black",
+                }}
+              >
+                {sortingOptions[sortAscending ? 0 : 1]}
+              </Text>
+            </View>
+          </ModalDropdown>
 
-      <ScrollView style={{ width: "100%" }}>
-        <Table borderStyle={{ borderWidth: 2, borderColor: "#ffaa00" }}>
-          <Row
-            data={tableData[0]}
-            style={styles.head}
-            textStyle={[
-              styles.headText,
-              { color: darkMode ? "white" : "black" },
-            ]}
-          />
-        </Table>
-        <Table borderStyle={{ borderWidth: 2, borderColor: "#ffaa00" }}>
-          <Rows
-            data={tableData.slice(1)}
-            textStyle={[
-              styles.rowText,
-              { color: darkMode ? "white" : "black" },
-            ]}
-          />
-        </Table>
-      </ScrollView>
+          <ScrollView style={{ width: "100%" }}>
+            <Table borderStyle={{ borderWidth: 2, borderColor: "#ffaa00" }}>
+              <Row
+                data={tableData[0]}
+                style={styles.head}
+                textStyle={[
+                  styles.headText,
+                  { color: darkMode ? "white" : "black" },
+                ]}
+              />
+            </Table>
+            <Table borderStyle={{ borderWidth: 2, borderColor: "#ffaa00" }}>
+              <Rows
+                data={tableData.slice(1)}
+                textStyle={[
+                  styles.rowText,
+                  { color: darkMode ? "white" : "black" },
+                ]}
+              />
+            </Table>
+          </ScrollView>
+        </>
+      )}
     </SafeAreaView>
   );
 }

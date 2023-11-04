@@ -13,7 +13,6 @@ import NAV2 from "./NAV2";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import ForgotPassword from "./ForgotPassword";
-import AdminPage from "./AdminPage";
 import ProfilePage from "./ProfilePage";
 import AdminNavigator from "./AdminNavigator";
 import Settings from "./Settings/Settings";

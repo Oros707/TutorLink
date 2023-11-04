@@ -30,7 +30,7 @@ const UsersPage = () => {
         ...doc.data(),
       }));
       setUsers(eventsList);
-      setLoading(false); // Set loading to false when data is fetched
+      setLoading(false);
     });
 
     return () => {
@@ -40,9 +40,7 @@ const UsersPage = () => {
 
   const deleteUser = async (userId) => {
     try {
-      // Delete the user from the database
       await deleteDoc(doc(db, "users", userId));
-      // Filter out the deleted user from the local state
       setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -53,10 +51,8 @@ const UsersPage = () => {
     <View style={styles.container}>
       <Text style={styles.subtitle}>Users in the Database:</Text>
       {loading ? (
-        // Show loading indicator while data is being fetched
         <ActivityIndicator size="large" color="blue" />
       ) : (
-        // Render the user list when data is available
         <FlatList
           data={users}
           keyExtractor={(user) => user.id.toString()}
