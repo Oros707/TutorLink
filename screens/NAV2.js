@@ -38,7 +38,7 @@ export default function NAV2() {
         }}
       />
       <Tab.Screen
-        name="AttNavigator"
+        name="Attendance"
         component={AttNavigator}
         options={{
           tabBarLabel: "Attendance",
