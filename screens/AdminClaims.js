@@ -25,7 +25,7 @@ const Claims = () => {
         ...doc.data(),
       }));
       setClaims(claimsList);
-      setLoading(false); 
+      setLoading(false);
     });
 
     return () => {
@@ -37,6 +37,7 @@ const Claims = () => {
     try {
       const claimDocRef = doc(db, "Claims", claimId);
       await deleteDoc(claimDocRef);
+      alert("This claim has been submitted to HR");
     } catch (error) {
       console.error("Error deleting claim:", error);
     }
@@ -70,13 +71,13 @@ const Claims = () => {
               <Text style={styles.text}>Phone Number: {item.phonenumber}</Text>
               <Text style={styles.text}>Disability: {item.disability}</Text>
               <Text style={styles.text}>Race: {item.race}</Text>
+              <TouchableOpacity
+                onPress={() => handleDeleteClaim(item.id)}
+                style={styles.deleteButton}
+              >
+                <Text style={{ color: "white" }}>Submit</Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              onPress={() => handleDeleteClaim(item.id)}
-              style={styles.deleteButton}
-            >
-              <AntDesign name="delete" size={20} color="red" />
-            </TouchableOpacity>
           </View>
         )}
       />
@@ -122,6 +123,11 @@ const styles = StyleSheet.create({
   deleteButton: {
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "green",
+    padding: 8,
+    borderRadius: 12,
+    width: 300,
+    marginTop: 20,
   },
 });
 
