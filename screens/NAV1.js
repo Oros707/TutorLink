@@ -4,7 +4,10 @@ import {
   DarkTheme,
   DefaultTheme,
 } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from "@react-navigation/stack";
 import SplashScreen from "./SplashScreen";
 import OB1 from "./OB1";
 import OB2 from "./OB2";
@@ -20,6 +23,7 @@ import { EventRegister } from "react-native-event-listeners";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTheme } from "./Settings/ThemeContext";
 import useAuth from "../hooks/useAuth";
+
 const Stack = createStackNavigator();
 
 export default function NAV1() {
@@ -60,7 +64,12 @@ export default function NAV1() {
 
 function StackNavigator() {
   return (
-    <Stack.Navigator initialRouteName="SplashScreen">
+    <Stack.Navigator
+      initialRouteName="SplashScreen"
+      screenOptions={{
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+      }}
+    >
       <Stack.Screen
         name="SplashScreen"
         component={SplashScreen}

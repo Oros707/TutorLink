@@ -9,6 +9,7 @@ export default function QRCodeScanner({ navigation }) {
   const [hasPermission, setHasPermission] = useState(false);
   const [scanData, setScanData] = useState(null);
   const [scanningComplete, setScanningComplete] = useState(false);
+  const [isScanning, setIsScanning] = useState(false); // Add isScanning state
 
   useEffect(() => {
     (async () => {
@@ -26,7 +27,10 @@ export default function QRCodeScanner({ navigation }) {
   }
 
   const handleBarCodeScanned = async ({ type, data }) => {
-    if (!scanData) {
+    if (!isScanning) {
+      // Check if not currently scanning
+      setIsScanning(true); // Set scanning to true
+
       const timestamp = new Date().toLocaleString();
       const [date, time] = timestamp.split(", ");
 
@@ -47,6 +51,7 @@ export default function QRCodeScanner({ navigation }) {
       }
       setScanData(attendanceData);
       setScanningComplete(true);
+      setIsScanning(false); // Reset scanning to false
     }
   };
 
